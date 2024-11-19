@@ -22,7 +22,7 @@ public class LaundryTicket {
 
     @NotNull
     @Column(name = "LAUNDRY_TICKET_CLASSIFICATION")
-    private String laundryClassification;
+    private String laundryTicketClassification;
 
     @NotNull
     @Column(name = "LAUNDRY_TICKET_PRICE")

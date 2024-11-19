@@ -23,13 +23,13 @@ public record LaundrySuppliesDTO(
 
     public static LaundrySuppliesDTO from(LaundrySupplies laundrySupplies) {
         return new LaundrySuppliesDTO(
-                LaundrySupplies.getLaundrySuppliesId(),
-                LaundrySupplies.getLaundrySuppliesName(),
-                LaundrySupplies.getLaundrySuppliesPrice(),
-                LaundrySupplies.getLaundrySuppliesClassification(),
-                LaundrySupplies.getLaundrySuppliesCompanyName(),
-                LaundrySupplies.getLaundrySuppliesDescription(),
-                LaundrySupplies.getLaundrySuppliesUrl()
+                laundrySupplies.getLaundrySuppliesId(),
+                laundrySupplies.getLaundrySuppliesName(),
+                laundrySupplies.getLaundrySuppliesPrice(),
+                laundrySupplies.getLaundrySuppliesClassification(),
+                laundrySupplies.getLaundrySuppliesCompanyName(),
+                laundrySupplies.getLaundrySuppliesDescription(),
+                laundrySupplies.getLaundrySuppliesUrl()
                );
     }
 

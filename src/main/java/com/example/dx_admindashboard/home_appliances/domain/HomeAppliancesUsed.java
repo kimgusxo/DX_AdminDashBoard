@@ -17,7 +17,7 @@ public class HomeAppliancesUsed {
     @Id
     @GeneratedValue
     @Column(name = "HOME_APPLIANCES_USED_ID")
-    private int homeAppliancesUsedId;
+    private Long homeAppliancesUsedId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "HOME_APPLIANCES_ID")
