@@ -5,6 +5,7 @@ import com.example.dx_admindashboard.order.domain.projection.OrderMonthlySalesRe
 import com.example.dx_admindashboard.order.domain.projection.OrderMonthlyStoreVisitorsProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -25,7 +26,7 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
             GROUP BY FUNCTION('MONTH', o.orderTime)
             ORDER BY FUNCTION('MONTH', o.orderTime)
             """)
-    List<OrderMonthlySalesRevenueProjection> findMonthlySalesRevenueByYear(int year);
+    List<OrderMonthlySalesRevenueProjection> findMonthlySalesRevenueByYear(@Param("year") int year);
 
     // Main 페이지 4번
     @Query("""
@@ -37,7 +38,8 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
             GROUP BY FUNCTION('MONTH', o.orderTime)
             ORDER BY FUNCTION('MONTH', o.orderTime)
             """)
-    List<OrderMonthlyStoreVisitorsProjection> findMonthlyVisitorCountByStoreIdAndYear(Long storeId, int year);
+    List<OrderMonthlyStoreVisitorsProjection> findMonthlyVisitorCountByStoreIdAndYear(@Param("storeId") Long storeId,
+                                                                                      @Param("year") int year);
 
 
 }

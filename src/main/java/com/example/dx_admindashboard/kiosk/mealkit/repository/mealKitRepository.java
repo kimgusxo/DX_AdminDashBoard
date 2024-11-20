@@ -7,6 +7,7 @@ import com.example.dx_admindashboard.kiosk.mealkit.projection.MealKitMonthlySale
 import com.example.dx_admindashboard.kiosk.mealkit.projection.MealKitAndCountProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -27,7 +28,7 @@ public interface mealKitRepository extends JpaRepository<MealKit, Long> {
             JOIN MealKitCounter mc ON mk.mealKitId = mc.mealKit.mealKitId
             WHERE mc.store.storeId = :storeId
            """)
-    List<MealKitAndCountProjection> findStoreIdBymealKitAndCountProjectionList(Long storeId);
+    List<MealKitAndCountProjection> findStoreIdBymealKitAndCountProjectionList(@Param("storeId") Long storeId);
 
     // 밀키트 재고 페이지 2번
     @Query("""
@@ -41,7 +42,9 @@ public interface mealKitRepository extends JpaRepository<MealKit, Long> {
             GROUP BY FUNCTION('MONTH', o.orderTime)
             ORDER BY FUNCTION('MONTH', o.orderTime)
             """)
-    List<MealKitMonthlySalesProjection> findMonthlySalesForYearByMealKitIdAndStoreId(Long mealKitId, Long storeId, int year);
+    List<MealKitMonthlySalesProjection> findMonthlySalesForYearByMealKitIdAndStoreId(@Param("mealKitId") Long mealKitId,
+                                                                                     @Param("storeId") Long storeId,
+                                                                                     @Param("year") int year);
 
     // 밀키트 재고 페이지 3번(연도 별)
     @Query("""
@@ -60,7 +63,8 @@ public interface mealKitRepository extends JpaRepository<MealKit, Long> {
             GROUP BY mk.mealKitId
             ORDER BY totalSales DESC
             """)
-    List<MealKitAndSalesProjection> findTop5ByOrderCountByStoreIdAndYear(Long storeId, int year);
+    List<MealKitAndSalesProjection> findTop5ByOrderCountByStoreIdAndYear(@Param("storeId") Long storeId,
+                                                                         @Param("year") int year);
 
     // 밀키트 재고 페이지 3번(연도/월 별)
     @Query("""
@@ -80,7 +84,9 @@ public interface mealKitRepository extends JpaRepository<MealKit, Long> {
             GROUP BY mk.mealKitId
             ORDER BY totalSales DESC
             """)
-    List<MealKitAndSalesProjection> findTop5ByOrderCountByStoreIdAndYearAndMonth(Long storeId, int year, int month);
+    List<MealKitAndSalesProjection> findTop5ByOrderCountByStoreIdAndYearAndMonth(@Param("storeId") Long storeId,
+                                                                                 @Param("year") int year,
+                                                                                 @Param("month") int month);
 
     // Main 페이지 4번 사용
     @Query("""
@@ -99,7 +105,8 @@ public interface mealKitRepository extends JpaRepository<MealKit, Long> {
             GROUP BY mk.mealKitId
             ORDER BY totalRevenue DESC
             """)
-    List<MealKitAndMonthlySalesRevenueProjection> findTop5ByTotalRevenueForMonth(int year, int month);
+    List<MealKitAndMonthlySalesRevenueProjection> findTop5ByTotalRevenueForMonth(@Param("year") int year,
+                                                                                 @Param("month") int month);
 
 
     // Main 페이지 6번 사용
@@ -118,7 +125,7 @@ public interface mealKitRepository extends JpaRepository<MealKit, Long> {
             GROUP BY mk.mealKitId
             ORDER BY totalSales DESC
             """)
-    List<MealKitAndSalesProjection> findTop5ByOrderCountByStoreId(Long storeId);
+    List<MealKitAndSalesProjection> findTop5ByOrderCountByStoreId(@Param("storeId") Long storeId);
 
 
 }

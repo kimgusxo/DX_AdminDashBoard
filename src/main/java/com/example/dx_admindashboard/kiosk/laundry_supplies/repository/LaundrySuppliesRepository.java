@@ -6,6 +6,7 @@ import com.example.dx_admindashboard.kiosk.laundry_supplies.domain.projection.La
 import com.example.dx_admindashboard.kiosk.laundry_supplies.domain.projection.LaundrySuppliesMonthlySalesProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -25,7 +26,7 @@ public interface LaundrySuppliesRepository extends JpaRepository<LaundrySupplies
             JOIN LaundrySuppliesCounter lc ON ls.laundrySuppliesId = lc.laundrySupplies.laundrySuppliesId
             WHERE lc.store.storeId = :storeId
            """)
-    List<LaundrySuppliesAndCountProjection> findStoreIdByLaundrySuppliesAndCountProjectionList(Long storeId);
+    List<LaundrySuppliesAndCountProjection> findStoreIdByLaundrySuppliesAndCountProjectionList(@Param("storeId") Long storeId);
 
     // 세탁용품 재고 페이지 2번 (월별 판매량)
     @Query("""
@@ -39,7 +40,9 @@ public interface LaundrySuppliesRepository extends JpaRepository<LaundrySupplies
             GROUP BY FUNCTION('MONTH', o.orderTime)
             ORDER BY FUNCTION('MONTH', o.orderTime)
             """)
-    List<LaundrySuppliesMonthlySalesProjection> findMonthlySalesForYearByLaundrySuppliesIdAndStoreId(Long laundrySuppliesId, Long storeId, int year);
+    List<LaundrySuppliesMonthlySalesProjection> findMonthlySalesForYearByLaundrySuppliesIdAndStoreId(@Param("laundrySuppliesId") Long laundrySuppliesId,
+                                                                                                     @Param("storeId") Long storeId,
+                                                                                                     @Param("year") int year);
 
     // 세탁용품 재고 페이지 3번 (연도별)
     @Query("""
@@ -57,7 +60,8 @@ public interface LaundrySuppliesRepository extends JpaRepository<LaundrySupplies
             GROUP BY ls.laundrySuppliesId, ls.laundrySuppliesName, ls.laundrySuppliesClassification, ls.laundrySuppliesPrice, o.store.storeId
             ORDER BY totalSales DESC
             """)
-    List<LaundrySuppliesAndSalesProjection> findTop5ByOrderCountByStoreIdAndYear(Long storeId, int year);
+    List<LaundrySuppliesAndSalesProjection> findTop5ByOrderCountByStoreIdAndYear(@Param("storeId") Long storeId,
+                                                                                 @Param("year") int year);
 
     // 세탁용품 재고 페이지 3번 (연도/월별)
     @Query("""
@@ -76,6 +80,8 @@ public interface LaundrySuppliesRepository extends JpaRepository<LaundrySupplies
             GROUP BY ls.laundrySuppliesId, ls.laundrySuppliesName, ls.laundrySuppliesClassification, ls.laundrySuppliesPrice, o.store.storeId
             ORDER BY totalSales DESC
             """)
-    List<LaundrySuppliesAndSalesProjection> findTop5ByOrderCountByStoreIdAndYearAndMonth(Long storeId, int year, int month);
+    List<LaundrySuppliesAndSalesProjection> findTop5ByOrderCountByStoreIdAndYearAndMonth(@Param("storeId") Long storeId,
+                                                                                         @Param("year") int year,
+                                                                                         @Param("month") int month);
 
 }
