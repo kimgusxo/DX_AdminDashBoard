@@ -7,14 +7,18 @@ public record UserDTO(
         String userEmail,
         String userPassword,
         String userName,
-        Boolean isSubscribe
+        Boolean isSubscribe,
+        String userGender,
+        Integer userAge
 ) {
     public static UserDTO of(Long userId,
                              String userEmail,
                              String userPassword,
                              String userName,
-                             Boolean isSubscribe) {
-        return new UserDTO(userId, userEmail, userPassword, userName, isSubscribe);
+                             Boolean isSubscribe,
+                             String userGender,
+                             Integer userAge) {
+        return new UserDTO(userId, userEmail, userPassword, userName, isSubscribe, userGender, userAge);
     }
     public static UserDTO from(User user) {
         return new UserDTO(
@@ -22,7 +26,9 @@ public record UserDTO(
                 user.getUserEmail(),
                 user.getUserPassword(),
                 user.getUserName(),
-                user.getIsSubscribe()
+                user.getIsSubscribe(),
+                user.getUserGender(),
+                user.getUserAge()
         );
     }
     public User toEntity() {
@@ -32,6 +38,8 @@ public record UserDTO(
                 .userPassword(userPassword)
                 .userName(userName)
                 .isSubscribe(isSubscribe)
+                .userGender(userGender)
+                .userAge(userAge)
                 .build();
     }
 }

@@ -1,6 +1,6 @@
 package com.example.dx_admindashboard.kiosk.mealkit.projection;
 
-public interface MonthlySalesProjection {
+public interface MealKitMonthlySalesProjection {
     Integer getMonth();
     Long getSalesCount();
 }

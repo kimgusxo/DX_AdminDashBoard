@@ -1,8 +1,8 @@
 package com.example.dx_admindashboard.kiosk.mealkit.domain.dto;
 
-import com.example.dx_admindashboard.kiosk.mealkit.projection.MealKitInfoProjection;
+import com.example.dx_admindashboard.kiosk.mealkit.projection.MealKitAndCountProjection;
 
-public record MealKitInfoDTO(
+public record MealKitAndCountDTO(
         Long mealKitId,
         String mealKitName,
         String mealKitClassification,
@@ -11,8 +11,8 @@ public record MealKitInfoDTO(
         Long storeId,
         Integer mealKitCount
 ) {
-    public static MealKitInfoDTO from(MealKitInfoProjection projection) {
-        return new MealKitInfoDTO(
+    public static MealKitAndCountDTO from(MealKitAndCountProjection projection) {
+        return new MealKitAndCountDTO(
                 projection.getMealKitId(),
                 projection.getMealKitName(),
                 projection.getMealKitClassification(),

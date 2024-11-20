@@ -1,7 +1,6 @@
 package com.example.dx_admindashboard.kiosk.laundry_supplies.domain.dto;
 
-import com.example.dx_admindashboard.kiosk.laundry_supplies.domain.projection.LaundrySuppliesInfoProjection;
-
+import com.example.dx_admindashboard.kiosk.laundry_supplies.domain.projection.LaundrySuppliesAndCountProjection;
 public record LaundrySuppliesInfoDTO(
         Long laundrySuppliesId,
         String laundrySuppliesName,
@@ -10,7 +9,7 @@ public record LaundrySuppliesInfoDTO(
         Long storeId,
         Integer storeCount
 ) {
-    public static LaundrySuppliesInfoDTO from(LaundrySuppliesInfoProjection projection) {
+    public static LaundrySuppliesInfoDTO from(LaundrySuppliesAndCountProjection projection) {
         return new LaundrySuppliesInfoDTO(
                 projection.getLaundrySuppliesId(),
                 projection.getLaundrySuppliesName(),

@@ -1,8 +1,11 @@
 package com.example.dx_admindashboard.user.domain;
 
+import com.example.dx_admindashboard.order.domain.Order;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -33,5 +36,16 @@ public class User {
     @NotNull
     @Column(name = "IS_SUBSCRIBE")
     private Boolean isSubscribe;
+
+    @NotNull
+    @Column(name = "USER_GENDER")
+    private String userGender;
+
+    @NotNull
+    @Column(name = "USER_AGE")
+    private Integer userAge;
+
+    @OneToMany(mappedBy = "order")
+    private List<Order> orderList;
 
 }
