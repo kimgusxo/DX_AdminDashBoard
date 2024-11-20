@@ -9,11 +9,7 @@ public record StoreDTO(
         Double latitude,
         Double longitude
 ) {
-    public static StoreDTO of(Long storeId,
-                              String storeName,
-                              String storeAddress,
-                              Double latitude,
-                              Double longitude) {
+    public static StoreDTO of(Long storeId, String storeName, String storeAddress, Double latitude, Double longitude) {
         return new StoreDTO(storeId, storeName, storeAddress, latitude, longitude);
     }
 

@@ -1,6 +1,8 @@
 package com.example.dx_admindashboard.order.domain.dto;
 
 import com.example.dx_admindashboard.order.domain.Order;
+import com.example.dx_admindashboard.store.domain.Store;
+import com.example.dx_admindashboard.user.domain.User;
 
 import java.time.LocalDateTime;
 
@@ -18,23 +20,25 @@ public record OrderDTO(
                               Boolean spaceIsUsed,
                               Integer orderTotalPrice,
                               LocalDateTime orderTime) {
-        return new OrderDTO(orderId, userId,storeId, spaceIsUsed, orderTotalPrice, orderTime);
+        return new OrderDTO(orderId, userId, storeId, spaceIsUsed, orderTotalPrice, orderTime);
     }
+
     public static OrderDTO from(Order order) {
         return new OrderDTO(
                 order.getOrderId(),
-                order.getUserId(),
-                order.getStoreId(),
+                order.getUser().getUserId(), // User의 ID 추출
+                order.getStore().getStoreId(), // Store의 ID 추출
                 order.getSpaceIsUsed(),
                 order.getOrderTotalPrice(),
                 order.getOrderTime()
         );
     }
+
     public Order toEntity() {
         return Order.builder()
                 .orderId(orderId)
-                .userId(userId)
-                .storeId(storeId)
+                .user(User.builder().userId(userId).build()) // ID로 User 엔티티 생성
+                .store(Store.builder().storeId(storeId).build()) // ID로 Store 엔티티 생성
                 .spaceIsUsed(spaceIsUsed)
                 .orderTotalPrice(orderTotalPrice)
                 .orderTime(orderTime)

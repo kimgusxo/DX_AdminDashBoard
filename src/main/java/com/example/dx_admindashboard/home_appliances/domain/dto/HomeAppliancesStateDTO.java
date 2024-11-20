@@ -1,6 +1,8 @@
 package com.example.dx_admindashboard.home_appliances.domain.dto;
 
+import com.example.dx_admindashboard.home_appliances.domain.HomeAppliances;
 import com.example.dx_admindashboard.home_appliances.domain.HomeAppliancesState;
+import com.example.dx_admindashboard.store.domain.Store;
 
 public record HomeAppliancesStateDTO(
         Long storeId,
@@ -26,8 +28,8 @@ public record HomeAppliancesStateDTO(
 
     public HomeAppliancesState toEntity() {
         return HomeAppliancesState.builder()
-                .storeId(storeId)
-                .homeAppliancesId(homeAppliancesId)
+                .homeAppliances(HomeAppliances.builder().homeAppliancesId(homeAppliancesId).build())
+                .store(Store.builder().storeId(storeId).build())
                 .homeAppliancesState(homeAppliancesState)
                 .homeAppliancesPosition(homeAppliancesPosition)
                 .build();

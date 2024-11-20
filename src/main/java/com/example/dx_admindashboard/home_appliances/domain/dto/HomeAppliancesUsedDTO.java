@@ -8,8 +8,7 @@ public record HomeAppliancesUsedDTO(
         Long homeAppliancesId,
         Long orderId
 ) {
-    public static HomeAppliancesUsedDTO of(Long homeAppliancesId,
-                                          Long orderId) {
+    public static HomeAppliancesUsedDTO of(Long homeAppliancesId, Long orderId) {
         return new HomeAppliancesUsedDTO(homeAppliancesId, orderId);
     }
 
@@ -22,8 +21,8 @@ public record HomeAppliancesUsedDTO(
 
     public HomeAppliancesUsed toEntity() {
         return HomeAppliancesUsed.builder()
-                .homeAppliances(new HomeAppliances(homeAppliancesId)) // 엔터티 생성자나 빌더를 통해 설정
-                .order(new Order(orderId)) // 엔터티 생성자나 빌더를 통해 설정
+                .homeAppliances(HomeAppliances.builder().homeAppliancesId(homeAppliancesId).build())
+                .order(Order.builder().orderId(orderId).build())
                 .build();
     }
 }
