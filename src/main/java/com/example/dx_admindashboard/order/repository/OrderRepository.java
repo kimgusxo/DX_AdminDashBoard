@@ -21,7 +21,7 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
             GROUP BY FUNCTION('MONTH', o.orderTime)
             ORDER BY FUNCTION('MONTH', o.orderTime)
             """)
-    List<MonthAndTotalRevenueAndStoreIdByYearProjection> findMonthlySalesRevenueByYear(@Param("storeId") Long storeId,
+    List<MonthAndTotalRevenueAndStoreIdByYearProjection> findTotalRevenueListByStoreIdAndYear(@Param("storeId") Long storeId,
                                                                                      @Param("year") int year);
 
 
@@ -37,6 +37,6 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
             GROUP BY FUNCTION('MONTH', o.orderTime)
             ORDER BY FUNCTION('MONTH', o.orderTime)
             """)
-    List<MonthAndVisitorCountAndStoreIdByYearProjection> findMonthlyVisitorCountByStoreIdAndYear(@Param("storeId") Long storeId,
+    List<MonthAndVisitorCountAndStoreIdByYearProjection> findVisitorCountListByStoreIdAndYear(@Param("storeId") Long storeId,
                                                                                                 @Param("year") int year);
 }

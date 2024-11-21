@@ -19,7 +19,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
             JOIN u.orderList o
             WHERE o.store.storeId = :storeId
             """)
-    List<User> findUsersByStoreId(@Param("storeId") Long storeId);
+    List<User> findUserListByStoreId(@Param("storeId") Long storeId);
 
     // 고객 페이지 4번
     @Query("""
@@ -39,28 +39,28 @@ public interface UserRepository extends JpaRepository<User, Long> {
             GROUP BY mk.mealKitId
             ORDER BY totalSales DESC
             """)
-    List<MealKitInfoAndTotalSalesAndStoreIdByUserFeaturesProjection> findTop5ByGenderAndStoreId(@Param("storeId") Long storeId,
-                                                                                    @Param("gender") String gender);
+    List<MealKitInfoAndTotalSalesAndStoreIdByUserFeaturesProjection> findMealKitSalesCountTop5ByUserGender(@Param("storeId") Long storeId,
+                                                                                                           @Param("gender") String gender);
 
     // 고객 페이지 5번
     @Query("""
-            SELECT mk.mealKitId AS mealKitId,
-                   mk.mealKitName AS mealKitName,
-                   mk.mealKitClassification AS mealKitClassification,
-                   mk.mealKitFoodClassification AS mealKitFoodClassification,
-                   mk.mealKitPrice AS mealKitPrice,
-                   COUNT(mko) AS totalSales,
-                   o.store.storeId AS storeId
-            FROM MealKit mk
-            JOIN MealKitOrder mko ON mk.mealKitId = mko.mealKit.mealKitId
-            JOIN mko.order o
-            JOIN o.user u
-            WHERE o.store.storeId = :storeId
-            AND u.userAge = :age
-            GROUP BY mk.mealKitId
-            ORDER BY totalSales DESC
-            """)
-    List<MealKitInfoAndTotalSalesAndStoreIdByUserFeaturesProjection> findTop5ByAgeAndStoreId(@Param("storeId") Long storeId,
+        SELECT mk.mealKitId AS mealKitId,
+               mk.mealKitName AS mealKitName,
+               mk.mealKitClassification AS mealKitClassification,
+               mk.mealKitFoodClassification AS mealKitFoodClassification,
+               mk.mealKitPrice AS mealKitPrice,
+               COUNT(mko) AS totalSales,
+               o.store.storeId AS storeId
+        FROM MealKit mk
+        JOIN MealKitOrder mko ON mk.mealKitId = mko.mealKit.mealKitId
+        JOIN mko.order o
+        JOIN o.user u
+        WHERE o.store.storeId = :storeId
+        AND u.userAge BETWEEN :age AND (:age + 9)
+        GROUP BY mk.mealKitId
+        ORDER BY totalSales DESC
+        """)
+    List<MealKitInfoAndTotalSalesAndStoreIdByUserFeaturesProjection> findMealKitSalesCountTop5ByUserAge(@Param("storeId") Long storeId,
                                                                        @Param("age") Integer age);
 
 }

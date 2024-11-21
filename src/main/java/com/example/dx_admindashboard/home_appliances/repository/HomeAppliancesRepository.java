@@ -37,6 +37,6 @@ public interface HomeAppliancesRepository extends JpaRepository<HomeAppliances, 
             WHERE has.store.storeId = :storeId
             AND has.homeAppliancesState = :homeAppliancesState
             """)
-    List<HomeAppliancesInfoAndStoreIdProjection> findHomeAppliancesByStoreIdAndHomeAppliancesState(@Param("storeId") Long storeId,
-                                                                                               @Param("homeAppliancesState") String homeAppliancesState);
+    List<HomeAppliancesInfoAndStoreIdProjection> findHomeAppliancesListByStoreIdAndHomeAppliancesState(@Param("storeId") Long storeId,
+                                                                                                       @Param("homeAppliancesState") String homeAppliancesState);
 }

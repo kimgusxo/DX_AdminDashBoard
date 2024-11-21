@@ -50,7 +50,7 @@ public class LaundrySuppliesController {
 
     @GetMapping("/get/top5/month/count")
     @Operation(summary = "Get LaundrySuppliesSalesCountTop5 By Year And Month", description = "매장 별 세탁용품 해당 연도의 월별 판매량 TOP 5")
-    public ResponseEntity<List<LaundrySuppliesInfoAndStoreIdAndTotalSalesProjection>> getLaundrySuppliesSalesCountTop5ByStoreIdAndYearAndMonth(@RequestParam Long storeId,
+    public ResponseEntity<List<LaundrySuppliesInfoAndStoreIdAndTotalSalesProjectionDTO>> getLaundrySuppliesSalesCountTop5ByStoreIdAndYearAndMonth(@RequestParam Long storeId,
                                                                                                                                                @RequestParam Integer year,
                                                                                                                                                @RequestParam Integer month) {
         log.info("getLaundrySuppliesSalesCountTop5ByStoreIdAndYearAndMonth : storeId = {}, year = {}, month = {}", storeId, year, month);
