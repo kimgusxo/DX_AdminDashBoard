@@ -1,4 +1,4 @@
-package com.example.dx_admindashboard.exception;
+package com.example.dx_admindashboard.exception.dto;
 
 public record ErrorDTO(
         String errorMessage

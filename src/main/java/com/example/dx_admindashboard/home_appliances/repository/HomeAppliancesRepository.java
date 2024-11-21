@@ -23,7 +23,7 @@ public interface HomeAppliancesRepository extends JpaRepository<HomeAppliances, 
             JOIN HomeAppliancesState has ON ha.homeAppliancesId = has.homeAppliances.homeAppliancesId
             WHERE has.store.storeId = :storeId
             """)
-    List<HomeAppliancesInfoAndStoreIdProjection> findHomeAppliancesByStoreId(@Param("storeId") Long storeId);
+    List<HomeAppliancesInfoAndStoreIdProjection> findHomeAppliancesListByStoreId(@Param("storeId") Long storeId);
 
     // 가전 페이지 2번
     @Query("""

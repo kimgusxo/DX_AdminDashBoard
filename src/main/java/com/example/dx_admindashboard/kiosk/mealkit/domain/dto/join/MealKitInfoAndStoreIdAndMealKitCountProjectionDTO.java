@@ -1,4 +1,25 @@
 package com.example.dx_admindashboard.kiosk.mealkit.domain.dto.join;
 
-public record MealKitInfoAndStoreIdAndMealKitCountProjectionDTO() {
+import com.example.dx_admindashboard.kiosk.mealkit.domain.projection.MealKitInfoAndStoreIdAndMealKitCountProjection;
+
+public record MealKitInfoAndStoreIdAndMealKitCountProjectionDTO(
+        Long mealKitId,
+        String mealKitName,
+        String mealKitClassification,
+        String mealKitFoodClassification,
+        Integer mealKitPrice,
+        Long storeId,
+        Integer mealKitCount
+) {
+    public static MealKitInfoAndStoreIdAndMealKitCountProjectionDTO from(MealKitInfoAndStoreIdAndMealKitCountProjection projection) {
+        return new MealKitInfoAndStoreIdAndMealKitCountProjectionDTO(
+                projection.getMealKitId(),
+                projection.getMealKitName(),
+                projection.getMealKitClassification(),
+                projection.getMealKitFoodClassification(),
+                projection.getMealKitPrice(),
+                projection.getStoreId(),
+                projection.getMealKitCount()
+        );
+    }
 }
