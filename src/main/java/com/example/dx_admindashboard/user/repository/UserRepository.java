@@ -1,7 +1,7 @@
 package com.example.dx_admindashboard.user.repository;
 
 import com.example.dx_admindashboard.user.domain.User;
-import com.example.dx_admindashboard.user.domain.projection.MealKitAndUserFeatureSalesProjection;
+import com.example.dx_admindashboard.user.domain.projection.MealKitAndUserFeatureSalesAndStoreIdProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -28,7 +28,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
                    mk.mealKitClassification AS mealKitClassification,
                    mk.mealKitFoodClassification AS mealKitFoodClassification,
                    mk.mealKitPrice AS mealKitPrice,
-                   COUNT(mko) AS totalSales
+                   COUNT(mko) AS totalSales,
+                   o.store.storeId AS storeId
             FROM MealKit mk
             JOIN MealKitOrder mko ON mk.mealKitId = mko.mealKit.mealKitId
             JOIN mko.order o
@@ -38,8 +39,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
             GROUP BY mk.mealKitId
             ORDER BY totalSales DESC
             """)
-    List<MealKitAndUserFeatureSalesProjection> findTop5ByGenderAndStoreId(@Param("storeId") Long storeId,
-                                                                          @Param("gender") String gender);
+    List<MealKitAndUserFeatureSalesAndStoreIdProjection> findTop5ByGenderAndStoreId(@Param("storeId") Long storeId,
+                                                                                    @Param("gender") String gender);
 
     // 고객 페이지 5번
     @Query("""
@@ -48,7 +49,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
                    mk.mealKitClassification AS mealKitClassification,
                    mk.mealKitFoodClassification AS mealKitFoodClassification,
                    mk.mealKitPrice AS mealKitPrice,
-                   COUNT(mko) AS totalSales
+                   COUNT(mko) AS totalSales,
+                   o.store.storeId AS storeId
             FROM MealKit mk
             JOIN MealKitOrder mko ON mk.mealKitId = mko.mealKit.mealKitId
             JOIN mko.order o
@@ -58,7 +60,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
             GROUP BY mk.mealKitId
             ORDER BY totalSales DESC
             """)
-    List<MealKitAndUserFeatureSalesProjection> findTop5ByAgeAndStoreId(@Param("storeId") Long storeId,
+    List<MealKitAndUserFeatureSalesAndStoreIdProjection> findTop5ByAgeAndStoreId(@Param("storeId") Long storeId,
                                                                        @Param("age") Integer age);
 
 }

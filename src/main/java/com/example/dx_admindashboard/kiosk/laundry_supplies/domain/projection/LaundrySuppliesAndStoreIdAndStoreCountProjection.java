@@ -1,6 +1,6 @@
 package com.example.dx_admindashboard.kiosk.laundry_supplies.domain.projection;
 
-public interface LaundrySuppliesAndCountProjection {
+public interface LaundrySuppliesAndStoreIdAndStoreCountProjection {
     Long getLaundrySuppliesId();
     String getLaundrySuppliesName();
     String getLaundrySuppliesClassification();

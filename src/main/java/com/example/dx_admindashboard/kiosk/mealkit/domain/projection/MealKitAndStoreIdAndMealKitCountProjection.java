@@ -1,6 +1,6 @@
-package com.example.dx_admindashboard.kiosk.mealkit.projection;
+package com.example.dx_admindashboard.kiosk.mealkit.domain.projection;
 
-public interface MealKitAndCountProjection {
+public interface MealKitAndStoreIdAndMealKitCountProjection {
     Long getMealKitId();
     String getMealKitName();
     String getMealKitClassification();

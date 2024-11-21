@@ -1,8 +1,8 @@
 package com.example.dx_admindashboard.order.repository;
 
 import com.example.dx_admindashboard.order.domain.Order;
-import com.example.dx_admindashboard.order.domain.projection.OrderMonthlySalesRevenueProjection;
-import com.example.dx_admindashboard.order.domain.projection.OrderMonthlyStoreVisitorsProjection;
+import com.example.dx_admindashboard.order.domain.projection.OrderMonthlySalesRevenueAndStoreIdProjection;
+import com.example.dx_admindashboard.order.domain.projection.OrderMonthlyStoreVisitorsAndStoreIdProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -20,26 +20,28 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     // Main 페이지 3번
     @Query("""
             SELECT FUNCTION('MONTH', o.orderTime) AS month,
-                   SUM(o.orderTotalPrice) AS totalRevenue
+                   SUM(o.orderTotalPrice) AS totalRevenue,
+                   o.store.storeId
             FROM Order o
             WHERE FUNCTION('YEAR', o.orderTime) = :year
             GROUP BY FUNCTION('MONTH', o.orderTime)
             ORDER BY FUNCTION('MONTH', o.orderTime)
             """)
-    List<OrderMonthlySalesRevenueProjection> findMonthlySalesRevenueByYear(@Param("year") int year);
+    List<OrderMonthlySalesRevenueAndStoreIdProjection> findMonthlySalesRevenueByYear(@Param("year") int year);
 
     // Main 페이지 4번
     @Query("""
             SELECT FUNCTION('MONTH', o.orderTime) AS month,
-                   COUNT(DISTINCT o.user.userId) AS visitorCount
+                   COUNT(DISTINCT o.user.userId) AS visitorCount,
+                   o.store.storeId
             FROM Order o
             WHERE o.store.storeId = :storeId
             AND FUNCTION('YEAR', o.orderTime) = :year
             GROUP BY FUNCTION('MONTH', o.orderTime)
             ORDER BY FUNCTION('MONTH', o.orderTime)
             """)
-    List<OrderMonthlyStoreVisitorsProjection> findMonthlyVisitorCountByStoreIdAndYear(@Param("storeId") Long storeId,
-                                                                                      @Param("year") int year);
+    List<OrderMonthlyStoreVisitorsAndStoreIdProjection> findMonthlyVisitorCountByStoreIdAndYear(@Param("storeId") Long storeId,
+                                                                                                @Param("year") int year);
 
 
 }
