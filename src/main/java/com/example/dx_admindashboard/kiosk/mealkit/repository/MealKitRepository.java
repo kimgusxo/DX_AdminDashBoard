@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface mealKitRepository extends JpaRepository<MealKit, Long> {
+public interface MealKitRepository extends JpaRepository<MealKit, Long> {
 
     // 밀키트 재고 페이지 1번
     @Query("""
@@ -73,8 +73,8 @@ public interface mealKitRepository extends JpaRepository<MealKit, Long> {
                    mk.mealKitName AS mealKitName,
                    mk.mealKitClassification AS mealKitClassification,
                    mk.mealKitFoodClassification AS mealKitFoodClassification,
-                   o.store.storeId AS storeId,
                    mk.mealKitPrice AS mealKitPrice,
+                   o.store.storeId AS storeId,
                    COUNT(mko) AS totalSales
             FROM MealKit mk
             JOIN MealKitOrder mko ON mk.mealKitId = mko.mealKit.mealKitId
@@ -106,8 +106,9 @@ public interface mealKitRepository extends JpaRepository<MealKit, Long> {
             GROUP BY mk.mealKitId
             ORDER BY monthlyTotalRevenue DESC
             """)
-    List<MealKitAndMonthlyTotalSalesRevenueProjection> findTop5ByTotalRevenueForMonth(@Param("year") int year,
-                                                                                 @Param("month") int month);
+    List<MealKitAndMonthlyTotalSalesRevenueProjection> findTop5ByTotalRevenueForMonth(@Param("storeId") Long storeId,
+                                                                                      @Param("year") int year,
+                                                                                      @Param("month") int month);
 
 
     // Main 페이지 6번 사용

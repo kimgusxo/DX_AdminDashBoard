@@ -11,29 +11,26 @@ import java.util.List;
 
 public interface OrderRepository extends JpaRepository<Order, Long> {
 
-    // Main 페이지 1번
-    List<Order> findAll();
-    Order findByOrderId(Long orderId);
-
-    // Main 페이지 2번은 통신 X
-
     // Main 페이지 3번
     @Query("""
             SELECT FUNCTION('MONTH', o.orderTime) AS month,
                    SUM(o.orderTotalPrice) AS totalRevenue,
-                   o.store.storeId
+                   o.store.storeId AS storeId
             FROM Order o
             WHERE FUNCTION('YEAR', o.orderTime) = :year
             GROUP BY FUNCTION('MONTH', o.orderTime)
             ORDER BY FUNCTION('MONTH', o.orderTime)
             """)
-    List<OrderMonthlySalesRevenueAndStoreIdProjection> findMonthlySalesRevenueByYear(@Param("year") int year);
+    List<OrderMonthlySalesRevenueAndStoreIdProjection> findMonthlySalesRevenueByYear(@Param("storeId") Long storeId,
+                                                                                     @Param("year") int year);
 
-    // Main 페이지 4번
+
+
+    // Main 페이지 5번
     @Query("""
             SELECT FUNCTION('MONTH', o.orderTime) AS month,
                    COUNT(DISTINCT o.user.userId) AS visitorCount,
-                   o.store.storeId
+                   o.store.storeId AS storeId
             FROM Order o
             WHERE o.store.storeId = :storeId
             AND FUNCTION('YEAR', o.orderTime) = :year
@@ -42,6 +39,4 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
             """)
     List<OrderMonthlyStoreVisitorsAndStoreIdProjection> findMonthlyVisitorCountByStoreIdAndYear(@Param("storeId") Long storeId,
                                                                                                 @Param("year") int year);
-
-
 }
