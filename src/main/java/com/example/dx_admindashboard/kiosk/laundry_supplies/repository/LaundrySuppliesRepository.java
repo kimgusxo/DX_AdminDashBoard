@@ -44,7 +44,7 @@ public interface LaundrySuppliesRepository extends JpaRepository<LaundrySupplies
             """)
     List<MonthAndSalesCountAndStoreIdByLaundrySuppliesIdProjection> findLaundrySuppliesSalesCountByLaundrySuppliesIdAndStoreIdAndYear(@Param("laundrySuppliesId") Long laundrySuppliesId,
                                                                                                                                       @Param("storeId") Long storeId,
-                                                                                                                                      @Param("year") int year);
+                                                                                                                                      @Param("year") Integer year);
 
     // 세탁용품 재고 페이지 3번 (연도별)
     @Query("""
@@ -63,7 +63,7 @@ public interface LaundrySuppliesRepository extends JpaRepository<LaundrySupplies
             ORDER BY totalSales DESC
             """)
     List<LaundrySuppliesInfoAndStoreIdAndTotalSalesProjection> findLaundrySuppliesSalesCountTop5ByStoreIdAndYear(@Param("storeId") Long storeId,
-                                                                                                                 @Param("year") int year);
+                                                                                                                 @Param("year") Integer year);
 
     // 세탁용품 재고 페이지 3번 (연도/월별)
     @Query("""
@@ -83,7 +83,7 @@ public interface LaundrySuppliesRepository extends JpaRepository<LaundrySupplies
             ORDER BY totalSales DESC
             """)
     List<LaundrySuppliesInfoAndStoreIdAndTotalSalesProjection> findLaundrySuppliesSalesCountTop5ByStoreIdAndYearAndMonth(@Param("storeId") Long storeId,
-                                                                                         @Param("year") int year,
-                                                                                         @Param("month") int month);
+                                                                                         @Param("year") Integer year,
+                                                                                         @Param("month") Integer month);
 
 }
