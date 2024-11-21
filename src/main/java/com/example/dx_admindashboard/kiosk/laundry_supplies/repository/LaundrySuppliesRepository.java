@@ -2,9 +2,9 @@ package com.example.dx_admindashboard.kiosk.laundry_supplies.repository;
 
 import com.example.dx_admindashboard.kiosk.laundry_supplies.domain.LaundrySupplies;
 
-import com.example.dx_admindashboard.kiosk.laundry_supplies.domain.projection.LaundrySuppliesAndStoreIdAndStoreCountProjection;
-import com.example.dx_admindashboard.kiosk.laundry_supplies.domain.projection.LaundrySuppliesAndStoreIdAndTotalSalesProjection;
-import com.example.dx_admindashboard.kiosk.laundry_supplies.domain.projection.LaundrySuppliesMonthlySalesAndStoreIdProjection;
+import com.example.dx_admindashboard.kiosk.laundry_supplies.domain.projection.LaundrySuppliesInfoAndStoreIdAndStoreCountProjection;
+import com.example.dx_admindashboard.kiosk.laundry_supplies.domain.projection.LaundrySuppliesInfoAndStoreIdAndTotalSalesProjection;
+import com.example.dx_admindashboard.kiosk.laundry_supplies.domain.projection.MonthAndSalesCountAndStoreIdByLaundrySuppliesIdProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -27,7 +27,7 @@ public interface LaundrySuppliesRepository extends JpaRepository<LaundrySupplies
             JOIN LaundrySuppliesCounter lc ON ls.laundrySuppliesId = lc.laundrySupplies.laundrySuppliesId
             WHERE lc.store.storeId = :storeId
            """)
-    List<LaundrySuppliesAndStoreIdAndStoreCountProjection> findStoreIdByLaundrySuppliesAndCountProjectionList(@Param("storeId") Long storeId);
+    List<LaundrySuppliesInfoAndStoreIdAndStoreCountProjection> findStoreIdByLaundrySuppliesAndCountProjectionList(@Param("storeId") Long storeId);
 
     // 세탁용품 재고 페이지 2번 (월별 판매량)
     @Query("""
@@ -42,7 +42,7 @@ public interface LaundrySuppliesRepository extends JpaRepository<LaundrySupplies
             GROUP BY FUNCTION('MONTH', o.orderTime)
             ORDER BY FUNCTION('MONTH', o.orderTime)
             """)
-    List<LaundrySuppliesMonthlySalesAndStoreIdProjection> findMonthlySalesForYearByLaundrySuppliesIdAndStoreId(@Param("laundrySuppliesId") Long laundrySuppliesId,
+    List<MonthAndSalesCountAndStoreIdByLaundrySuppliesIdProjection> findMonthlySalesForYearByLaundrySuppliesIdAndStoreId(@Param("laundrySuppliesId") Long laundrySuppliesId,
                                                                                                                           @Param("storeId") Long storeId,
                                                                                                                           @Param("year") int year);
 
@@ -62,7 +62,7 @@ public interface LaundrySuppliesRepository extends JpaRepository<LaundrySupplies
             GROUP BY ls.laundrySuppliesId, ls.laundrySuppliesName, ls.laundrySuppliesClassification, ls.laundrySuppliesPrice, o.store.storeId
             ORDER BY totalSales DESC
             """)
-    List<LaundrySuppliesAndStoreIdAndTotalSalesProjection> findTop5ByOrderCountByStoreIdAndYear(@Param("storeId") Long storeId,
+    List<LaundrySuppliesInfoAndStoreIdAndTotalSalesProjection> findTop5ByOrderCountByStoreIdAndYear(@Param("storeId") Long storeId,
                                                                                                                 @Param("year") int year);
 
     // 세탁용품 재고 페이지 3번 (연도/월별)
@@ -82,7 +82,7 @@ public interface LaundrySuppliesRepository extends JpaRepository<LaundrySupplies
             GROUP BY ls.laundrySuppliesId, ls.laundrySuppliesName, ls.laundrySuppliesClassification, ls.laundrySuppliesPrice, o.store.storeId
             ORDER BY totalSales DESC
             """)
-    List<LaundrySuppliesAndStoreIdAndTotalSalesProjection> findTop5ByOrderCountByStoreIdAndYearAndMonth(@Param("storeId") Long storeId,
+    List<LaundrySuppliesInfoAndStoreIdAndTotalSalesProjection> findTop5ByOrderCountByStoreIdAndYearAndMonth(@Param("storeId") Long storeId,
                                                                                          @Param("year") int year,
                                                                                          @Param("month") int month);
 

@@ -1,12 +1,11 @@
 package com.example.dx_admindashboard.kiosk.mealkit.domain.projection;
 
-// 이새끼 머임??
-public interface MealKitAndMonthlyTotalSalesRevenueProjection {
+public interface MealKitInfoAndStoreIdAndTotalSalesProjection {
     Long getMealKitId();
     String getMealKitName();
     String getMealKitClassification();
     String getMealKitFoodClassification();
     Long getStoreId();
     Integer getMealKitPrice();
-    Long getMonthlyTotalRevenue();
+    Long getTotalSales(); // 연도별 총 판매량
 }

@@ -1,7 +1,7 @@
 package com.example.dx_admindashboard.home_appliances.repository;
 
 import com.example.dx_admindashboard.home_appliances.domain.HomeAppliances;
-import com.example.dx_admindashboard.home_appliances.domain.projection.HomeAppliancesAndStoreIdProjection;
+import com.example.dx_admindashboard.home_appliances.domain.projection.HomeAppliancesInfoAndStoreIdProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -23,7 +23,7 @@ public interface HomeAppliancesRepository extends JpaRepository<HomeAppliances, 
             JOIN HomeAppliancesState has ON ha.homeAppliancesId = has.homeAppliances.homeAppliancesId
             WHERE has.store.storeId = :storeId
             """)
-    List<HomeAppliancesAndStoreIdProjection> findHomeAppliancesByStoreId(@Param("storeId") Long storeId);
+    List<HomeAppliancesInfoAndStoreIdProjection> findHomeAppliancesByStoreId(@Param("storeId") Long storeId);
 
     // 가전 페이지 2번
     @Query("""
@@ -37,6 +37,6 @@ public interface HomeAppliancesRepository extends JpaRepository<HomeAppliances, 
             WHERE has.store.storeId = :storeId
             AND has.homeAppliancesState = :homeAppliancesState
             """)
-    List<HomeAppliancesAndStoreIdProjection> findHomeAppliancesByStoreIdAndHomeAppliancesState(@Param("storeId") Long storeId,
+    List<HomeAppliancesInfoAndStoreIdProjection> findHomeAppliancesByStoreIdAndHomeAppliancesState(@Param("storeId") Long storeId,
                                                                                                @Param("homeAppliancesState") String homeAppliancesState);
 }

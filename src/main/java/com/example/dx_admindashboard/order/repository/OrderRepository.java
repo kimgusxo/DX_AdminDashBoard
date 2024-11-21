@@ -1,8 +1,8 @@
 package com.example.dx_admindashboard.order.repository;
 
 import com.example.dx_admindashboard.order.domain.Order;
-import com.example.dx_admindashboard.order.domain.projection.OrderMonthlySalesRevenueAndStoreIdProjection;
-import com.example.dx_admindashboard.order.domain.projection.OrderMonthlyStoreVisitorsAndStoreIdProjection;
+import com.example.dx_admindashboard.order.domain.projection.MonthAndTotalRevenueAndStoreIdByYearProjection;
+import com.example.dx_admindashboard.order.domain.projection.MonthAndVisitorCountAndStoreIdByYearProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -21,7 +21,7 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
             GROUP BY FUNCTION('MONTH', o.orderTime)
             ORDER BY FUNCTION('MONTH', o.orderTime)
             """)
-    List<OrderMonthlySalesRevenueAndStoreIdProjection> findMonthlySalesRevenueByYear(@Param("storeId") Long storeId,
+    List<MonthAndTotalRevenueAndStoreIdByYearProjection> findMonthlySalesRevenueByYear(@Param("storeId") Long storeId,
                                                                                      @Param("year") int year);
 
 
@@ -37,6 +37,6 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
             GROUP BY FUNCTION('MONTH', o.orderTime)
             ORDER BY FUNCTION('MONTH', o.orderTime)
             """)
-    List<OrderMonthlyStoreVisitorsAndStoreIdProjection> findMonthlyVisitorCountByStoreIdAndYear(@Param("storeId") Long storeId,
+    List<MonthAndVisitorCountAndStoreIdByYearProjection> findMonthlyVisitorCountByStoreIdAndYear(@Param("storeId") Long storeId,
                                                                                                 @Param("year") int year);
 }

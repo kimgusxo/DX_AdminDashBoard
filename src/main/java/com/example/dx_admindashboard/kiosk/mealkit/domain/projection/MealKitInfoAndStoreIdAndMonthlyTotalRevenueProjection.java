@@ -1,11 +1,12 @@
 package com.example.dx_admindashboard.kiosk.mealkit.domain.projection;
 
-public interface MealKitAndStoreIdAndMealKitCountProjection {
+// 이새끼 머임??
+public interface MealKitInfoAndStoreIdAndMonthlyTotalRevenueProjection {
     Long getMealKitId();
     String getMealKitName();
     String getMealKitClassification();
     String getMealKitFoodClassification();
-    Integer getMealKitPrice();
     Long getStoreId();
-    Integer getMealKitCount();
+    Integer getMealKitPrice();
+    Long getMonthlyTotalRevenue();
 }

@@ -1,7 +1,7 @@
 package com.example.dx_admindashboard.user.repository;
 
 import com.example.dx_admindashboard.user.domain.User;
-import com.example.dx_admindashboard.user.domain.projection.MealKitAndUserFeatureSalesAndStoreIdProjection;
+import com.example.dx_admindashboard.user.domain.projection.MealKitInfoAndTotalSalesAndStoreIdByUserFeaturesProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -39,7 +39,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
             GROUP BY mk.mealKitId
             ORDER BY totalSales DESC
             """)
-    List<MealKitAndUserFeatureSalesAndStoreIdProjection> findTop5ByGenderAndStoreId(@Param("storeId") Long storeId,
+    List<MealKitInfoAndTotalSalesAndStoreIdByUserFeaturesProjection> findTop5ByGenderAndStoreId(@Param("storeId") Long storeId,
                                                                                     @Param("gender") String gender);
 
     // 고객 페이지 5번
@@ -60,7 +60,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
             GROUP BY mk.mealKitId
             ORDER BY totalSales DESC
             """)
-    List<MealKitAndUserFeatureSalesAndStoreIdProjection> findTop5ByAgeAndStoreId(@Param("storeId") Long storeId,
+    List<MealKitInfoAndTotalSalesAndStoreIdByUserFeaturesProjection> findTop5ByAgeAndStoreId(@Param("storeId") Long storeId,
                                                                        @Param("age") Integer age);
 
 }

@@ -1,6 +1,6 @@
 package com.example.dx_admindashboard.user.domain.projection;
 
-public interface MealKitAndUserFeatureSalesAndStoreIdProjection {
+public interface MealKitInfoAndTotalSalesAndStoreIdByUserFeaturesProjection {
     Long getMealKitId();
     String getMealKitName();
     String getMealKitClassification();

@@ -1,7 +1,7 @@
 package com.example.dx_admindashboard.order.domain.projection;
 
-public interface OrderMonthlySalesRevenueAndStoreIdProjection {
+public interface MonthAndVisitorCountAndStoreIdByYearProjection {
     Integer getMonth();
-    Long getTotalRevenue();
+    Long getVisitorCount();
     Long getStoreId();
 }
