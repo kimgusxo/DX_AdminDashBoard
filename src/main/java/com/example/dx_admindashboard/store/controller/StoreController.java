@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @Slf4j
 @RestController
 @RequestMapping("/store")
@@ -21,7 +23,7 @@ public class StoreController {
 
     @GetMapping("/get/list")
     @Operation(summary = "Get StoreList", description = "매장 리스트 가져오기")
-    public ResponseEntity<StoreDTO> getStoreList() {
+    public ResponseEntity<List<StoreDTO>> getStoreList() {
         log.info("getStoreList");
         return new ResponseEntity<>(storeService.getStoreList(), HttpStatus.OK);
     }
