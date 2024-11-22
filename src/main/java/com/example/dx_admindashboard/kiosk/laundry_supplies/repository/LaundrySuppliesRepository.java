@@ -31,16 +31,16 @@ public interface LaundrySuppliesRepository extends JpaRepository<LaundrySupplies
 
     // 세탁용품 재고 페이지 2번 (월별 판매량)
     @Query("""
-            SELECT FUNCTION('MONTH', o.orderTime) AS month,
+            SELECT EXTRACT(MONTH FROM o.orderTime) AS month,
                    COUNT(lso) AS salesCount,
                    o.store.storeId AS storeId
             FROM LaundrySuppliesOrder lso
             JOIN lso.order o
             WHERE lso.laundrySupplies.laundrySuppliesId = :laundrySuppliesId
             AND o.store.storeId = :storeId
-            AND FUNCTION('YEAR', o.orderTime) = :year
-            GROUP BY FUNCTION('MONTH', o.orderTime), o.store.storeId
-            ORDER BY FUNCTION('MONTH', o.orderTime)
+            AND EXTRACT(YEAR FROM o.orderTime) = :year
+            GROUP BY EXTRACT(MONTH FROM o.orderTime), o.store.storeId
+            ORDER BY EXTRACT(MONTH FROM o.orderTime)
             """)
     List<MonthAndSalesCountAndStoreIdByLaundrySuppliesIdProjection> findLaundrySuppliesSalesCountByLaundrySuppliesIdAndStoreIdAndYear(@Param("laundrySuppliesId") Long laundrySuppliesId,
                                                                                                                                       @Param("storeId") Long storeId,
@@ -58,7 +58,7 @@ public interface LaundrySuppliesRepository extends JpaRepository<LaundrySupplies
             JOIN LaundrySuppliesOrder lso ON ls.laundrySuppliesId = lso.laundrySupplies.laundrySuppliesId
             JOIN lso.order o
             WHERE o.store.storeId = :storeId
-            AND FUNCTION('YEAR', o.orderTime) = :year
+            AND EXTRACT(YEAR FROM o.orderTime) = :year
             GROUP BY ls.laundrySuppliesId, o.store.storeId
             ORDER BY totalSales DESC
             """)
@@ -77,8 +77,8 @@ public interface LaundrySuppliesRepository extends JpaRepository<LaundrySupplies
             JOIN LaundrySuppliesOrder lso ON ls.laundrySuppliesId = lso.laundrySupplies.laundrySuppliesId
             JOIN lso.order o
             WHERE o.store.storeId = :storeId
-            AND FUNCTION('YEAR', o.orderTime) = :year
-            AND FUNCTION('MONTH', o.orderTime) = :month
+            AND EXTRACT(YEAR FROM o.orderTime) = :year
+            AND EXTRACT(MONTH FROM o.orderTime) = :month
             GROUP BY ls.laundrySuppliesId, o.store.storeId
             ORDER BY totalSales DESC
             """)

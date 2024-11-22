@@ -15,7 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class HomeAppliancesService {
 
-    private HomeAppliancesRepository homeAppliancesRepository;
+    private final HomeAppliancesRepository homeAppliancesRepository;
 
     @Transactional
     public List<HomeAppliancesInfoAndStoreIdProjectionDTO> getHomeAppliancesListByStoreId(Long storeId) {

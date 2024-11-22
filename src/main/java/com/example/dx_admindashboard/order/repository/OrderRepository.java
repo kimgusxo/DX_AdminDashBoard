@@ -13,14 +13,14 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
     // Main 페이지 3번
     @Query("""
-            SELECT FUNCTION('MONTH', o.orderTime) AS month,
+            SELECT EXTRACT(MONTH FROM o.orderTime) AS month,
                    SUM(o.orderTotalPrice) AS totalRevenue,
                    o.store.storeId AS storeId
             FROM Order o
             WHERE o.store.storeId = :storeId
-            AND FUNCTION('YEAR', o.orderTime) = :year
-            GROUP BY FUNCTION('MONTH', o.orderTime), o.store.storeId
-            ORDER BY FUNCTION('MONTH', o.orderTime)
+            AND EXTRACT(YEAR FROM o.orderTime) = :year
+            GROUP BY EXTRACT(MONTH FROM o.orderTime), o.store.storeId
+            ORDER BY EXTRACT(MONTH FROM o.orderTime)
             """)
     List<MonthAndTotalRevenueAndStoreIdByYearProjection> findTotalRevenueListByStoreIdAndYear(@Param("storeId") Long storeId,
                                                                                               @Param("year") Integer year);
@@ -29,14 +29,14 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
     // Main 페이지 5번
     @Query("""
-            SELECT FUNCTION('MONTH', o.orderTime) AS month,
+            SELECT EXTRACT(MONTH FROM o.orderTime) AS month,
                    COUNT(DISTINCT o.user.userId) AS visitorCount,
                    o.store.storeId AS storeId
             FROM Order o
             WHERE o.store.storeId = :storeId
-            AND FUNCTION('YEAR', o.orderTime) = :year
-            GROUP BY FUNCTION('MONTH', o.orderTime), o.store.storeId
-            ORDER BY FUNCTION('MONTH', o.orderTime)
+            AND EXTRACT(YEAR FROM o.orderTime) = :year
+            GROUP BY EXTRACT(MONTH FROM o.orderTime), o.store.storeId
+            ORDER BY EXTRACT(MONTH FROM o.orderTime)
             """)
     List<MonthAndVisitorCountAndStoreIdByYearProjection> findVisitorCountListByStoreIdAndYear(@Param("storeId") Long storeId,
                                                                                               @Param("year") Integer year);

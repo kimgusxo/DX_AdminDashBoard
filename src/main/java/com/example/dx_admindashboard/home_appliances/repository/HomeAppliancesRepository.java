@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface HomeAppliancesRepository extends JpaRepository<HomeAppliances, Integer> {
+public interface HomeAppliancesRepository extends JpaRepository<HomeAppliances, Long> {
 
     // 가전 페이지 1번
     @Query("""

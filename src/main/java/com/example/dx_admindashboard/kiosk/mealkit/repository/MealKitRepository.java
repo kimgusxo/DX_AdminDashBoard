@@ -32,16 +32,16 @@ public interface MealKitRepository extends JpaRepository<MealKit, Long> {
 
     // 밀키트 재고 페이지 2번
     @Query("""
-            SELECT FUNCTION('MONTH', o.orderTime) AS month,
+            SELECT EXTRACT(MONTH FROM o.orderTime) AS month,
                    COUNT(mko) AS salesCount,
                    o.store.storeId AS storeId
             FROM MealKitOrder mko
             JOIN mko.order o
             WHERE mko.mealKit.mealKitId = :mealKitId
             AND o.store.storeId = :storeId
-            AND FUNCTION('YEAR', o.orderTime) = :year
-            GROUP BY FUNCTION('MONTH', o.orderTime), o.store.storeId
-            ORDER BY FUNCTION('MONTH', o.orderTime)
+            AND EXTRACT(YEAR FROM o.orderTime) = :year
+            GROUP BY EXTRACT(MONTH FROM o.orderTime), o.store.storeId
+            ORDER BY EXTRACT(MONTH FROM o.orderTime)
             """)
     List<MonthAndSalesCountAndStoreIdByMealKitIdAndYearProjection> findMealKitSalesCountByMealKitIdAndStoreIdAndYear(@Param("mealKitId") Long mealKitId,
                                                                                                                      @Param("storeId") Long storeId,
@@ -60,7 +60,7 @@ public interface MealKitRepository extends JpaRepository<MealKit, Long> {
             JOIN MealKitOrder mko ON mk.mealKitId = mko.mealKit.mealKitId
             JOIN mko.order o
             WHERE o.store.storeId = :storeId
-            AND FUNCTION('YEAR', o.orderTime) = :year
+            AND EXTRACT(YEAR FROM o.orderTime) = :year
             GROUP BY mk.mealKitId, o.store.storeId
             ORDER BY totalSales DESC
             """)
@@ -80,8 +80,8 @@ public interface MealKitRepository extends JpaRepository<MealKit, Long> {
             JOIN MealKitOrder mko ON mk.mealKitId = mko.mealKit.mealKitId
             JOIN mko.order o
             WHERE o.store.storeId = :storeId
-            AND FUNCTION('YEAR', o.orderTime) = :year
-            AND FUNCTION('MONTH', o.orderTime) = :month
+            AND EXTRACT(MONTH FROM o.orderTime) = :year
+            AND EXTRACT(YEAR FROM o.orderTime) = :month
             GROUP BY mk.mealKitId, o.store.storeId
             ORDER BY totalSales DESC
             """)
@@ -102,8 +102,8 @@ public interface MealKitRepository extends JpaRepository<MealKit, Long> {
             JOIN MealKitOrder mko ON mk.mealKitId = mko.mealKit.mealKitId
             JOIN mko.order o
             WHERE o.store.storeId = :storeId
-            AND FUNCTION('YEAR', o.orderTime) = :year
-            AND FUNCTION('MONTH', o.orderTime) = :month
+            AND EXTRACT(YEAR FROM o.orderTime) = :year
+            AND EXTRACT(MONTH FROM o.orderTime) = :month
             GROUP BY mk.mealKitId, o.store.storeId
             ORDER BY monthlyTotalRevenue DESC
             """)
