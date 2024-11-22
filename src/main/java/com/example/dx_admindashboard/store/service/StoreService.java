@@ -1,6 +1,7 @@
 package com.example.dx_admindashboard.store.service;
 
 import com.example.dx_admindashboard.exception.ListEmptyException;
+import com.example.dx_admindashboard.exception.ObjectEmptyException;
 import com.example.dx_admindashboard.store.domain.Store;
 import com.example.dx_admindashboard.store.domain.dto.StoreDTO;
 import com.example.dx_admindashboard.store.repository.StoreRepository;
@@ -10,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -37,6 +39,12 @@ public class StoreService {
 
     @Transactional
     public StoreDTO getStore(Long storeId) {
-        return StoreDTO.from(storeRepository.findByStoreId(storeId));
+        Optional<Store> store = storeRepository.findById(storeId);
+
+        if (store.isEmpty()) {
+            throw new ObjectEmptyException();
+        }
+
+        return StoreDTO.from(store.get());
     }
 }
