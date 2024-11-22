@@ -39,7 +39,7 @@ public interface LaundrySuppliesRepository extends JpaRepository<LaundrySupplies
             WHERE lso.laundrySupplies.laundrySuppliesId = :laundrySuppliesId
             AND o.store.storeId = :storeId
             AND FUNCTION('YEAR', o.orderTime) = :year
-            GROUP BY FUNCTION('MONTH', o.orderTime)
+            GROUP BY FUNCTION('MONTH', o.orderTime), o.store.storeId
             ORDER BY FUNCTION('MONTH', o.orderTime)
             """)
     List<MonthAndSalesCountAndStoreIdByLaundrySuppliesIdProjection> findLaundrySuppliesSalesCountByLaundrySuppliesIdAndStoreIdAndYear(@Param("laundrySuppliesId") Long laundrySuppliesId,
@@ -59,7 +59,7 @@ public interface LaundrySuppliesRepository extends JpaRepository<LaundrySupplies
             JOIN lso.order o
             WHERE o.store.storeId = :storeId
             AND FUNCTION('YEAR', o.orderTime) = :year
-            GROUP BY ls.laundrySuppliesId, ls.laundrySuppliesName, ls.laundrySuppliesClassification, ls.laundrySuppliesPrice, o.store.storeId
+            GROUP BY ls.laundrySuppliesId, o.store.storeId
             ORDER BY totalSales DESC
             """)
     List<LaundrySuppliesInfoAndStoreIdAndTotalSalesProjection> findLaundrySuppliesSalesCountTop5ByStoreIdAndYear(@Param("storeId") Long storeId,
@@ -79,7 +79,7 @@ public interface LaundrySuppliesRepository extends JpaRepository<LaundrySupplies
             WHERE o.store.storeId = :storeId
             AND FUNCTION('YEAR', o.orderTime) = :year
             AND FUNCTION('MONTH', o.orderTime) = :month
-            GROUP BY ls.laundrySuppliesId, ls.laundrySuppliesName, ls.laundrySuppliesClassification, ls.laundrySuppliesPrice, o.store.storeId
+            GROUP BY ls.laundrySuppliesId, o.store.storeId
             ORDER BY totalSales DESC
             """)
     List<LaundrySuppliesInfoAndStoreIdAndTotalSalesProjection> findLaundrySuppliesSalesCountTop5ByStoreIdAndYearAndMonth(@Param("storeId") Long storeId,

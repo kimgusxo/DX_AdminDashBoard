@@ -36,7 +36,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
             JOIN o.user u
             WHERE o.store.storeId = :storeId
             AND u.userGender = :gender
-            GROUP BY mk.mealKitId
+            GROUP BY mk.mealKitId, o.store.storeId
             ORDER BY totalSales DESC
             """)
     List<MealKitInfoAndTotalSalesAndStoreIdByUserFeaturesProjection> findMealKitSalesCountTop5ByUserGender(@Param("storeId") Long storeId,
@@ -57,7 +57,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
         JOIN o.user u
         WHERE o.store.storeId = :storeId
         AND u.userAge BETWEEN :age AND (:age + 9)
-        GROUP BY mk.mealKitId
+        GROUP BY mk.mealKitId, o.store.storeId
         ORDER BY totalSales DESC
         """)
     List<MealKitInfoAndTotalSalesAndStoreIdByUserFeaturesProjection> findMealKitSalesCountTop5ByUserAge(@Param("storeId") Long storeId,

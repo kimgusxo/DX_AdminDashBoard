@@ -40,7 +40,7 @@ public interface MealKitRepository extends JpaRepository<MealKit, Long> {
             WHERE mko.mealKit.mealKitId = :mealKitId
             AND o.store.storeId = :storeId
             AND FUNCTION('YEAR', o.orderTime) = :year
-            GROUP BY FUNCTION('MONTH', o.orderTime)
+            GROUP BY FUNCTION('MONTH', o.orderTime), o.store.storeId
             ORDER BY FUNCTION('MONTH', o.orderTime)
             """)
     List<MonthAndSalesCountAndStoreIdByMealKitIdAndYearProjection> findMealKitSalesCountByMealKitIdAndStoreIdAndYear(@Param("mealKitId") Long mealKitId,
@@ -61,7 +61,7 @@ public interface MealKitRepository extends JpaRepository<MealKit, Long> {
             JOIN mko.order o
             WHERE o.store.storeId = :storeId
             AND FUNCTION('YEAR', o.orderTime) = :year
-            GROUP BY mk.mealKitId
+            GROUP BY mk.mealKitId, o.store.storeId
             ORDER BY totalSales DESC
             """)
     List<MealKitInfoAndStoreIdAndTotalSalesProjection> findMealKitSalesCountTop5ByStoreIdAndYear(@Param("storeId") Long storeId,
@@ -82,7 +82,7 @@ public interface MealKitRepository extends JpaRepository<MealKit, Long> {
             WHERE o.store.storeId = :storeId
             AND FUNCTION('YEAR', o.orderTime) = :year
             AND FUNCTION('MONTH', o.orderTime) = :month
-            GROUP BY mk.mealKitId
+            GROUP BY mk.mealKitId, o.store.storeId
             ORDER BY totalSales DESC
             """)
     List<MealKitInfoAndStoreIdAndTotalSalesProjection> findMealKitSalesCountTop5ByStoreIdAndYearAndMonth(@Param("storeId") Long storeId,
@@ -104,7 +104,7 @@ public interface MealKitRepository extends JpaRepository<MealKit, Long> {
             WHERE o.store.storeId = :storeId
             AND FUNCTION('YEAR', o.orderTime) = :year
             AND FUNCTION('MONTH', o.orderTime) = :month
-            GROUP BY mk.mealKitId
+            GROUP BY mk.mealKitId, o.store.storeId
             ORDER BY monthlyTotalRevenue DESC
             """)
     List<MealKitInfoAndStoreIdAndMonthlyTotalRevenueProjection> findMealKitSalesRevenueTop5ByStoreIdAndYearAndMonth(@Param("storeId") Long storeId,
@@ -125,7 +125,7 @@ public interface MealKitRepository extends JpaRepository<MealKit, Long> {
             JOIN MealKitOrder mko ON mk.mealKitId = mko.mealKit.mealKitId
             JOIN mko.order o
             WHERE o.store.storeId = :storeId
-            GROUP BY mk.mealKitId
+            GROUP BY mk.mealKitId, o.store.storeId
             ORDER BY totalSales DESC
             """)
     List<MealKitInfoAndStoreIdAndTotalSalesProjection> findMealKitSalesCountTop5ByStoreId(@Param("storeId") Long storeId);
