@@ -47,16 +47,16 @@ public class Order {
     @Column(name = "ORDER_TIME")
     private LocalDateTime orderTime;
 
-    @OneToMany(mappedBy = "mealKitOrder")
+    @OneToMany(mappedBy = "order")
     private List<MealKitOrder> mealKitOrderList;
 
-    @OneToMany(mappedBy = "laundryTicketOrder")
+    @OneToMany(mappedBy = "order")
     private List<LaundryTicketOrder> laundryTicketOrderList;
 
-    @OneToMany(mappedBy = "laundrySuppliesOrder")
+    @OneToMany(mappedBy = "order")
     private List<LaundrySuppliesOrder> laundrySuppliesOrderList;
 
-    @OneToMany(mappedBy = "homeAppliancesUsed")
+    @OneToMany(mappedBy = "order")
     private List<HomeAppliancesUsed> homeAppliancesUsedList;
 
 }

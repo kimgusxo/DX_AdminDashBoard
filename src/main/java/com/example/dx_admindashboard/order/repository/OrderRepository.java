@@ -17,12 +17,13 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
                    SUM(o.orderTotalPrice) AS totalRevenue,
                    o.store.storeId AS storeId
             FROM Order o
-            WHERE FUNCTION('YEAR', o.orderTime) = :year
+            WHERE o.store.storeId = :storeId
+            AND FUNCTION('YEAR', o.orderTime) = :year
             GROUP BY FUNCTION('MONTH', o.orderTime)
             ORDER BY FUNCTION('MONTH', o.orderTime)
             """)
     List<MonthAndTotalRevenueAndStoreIdByYearProjection> findTotalRevenueListByStoreIdAndYear(@Param("storeId") Long storeId,
-                                                                                     @Param("year") Integer year);
+                                                                                              @Param("year") Integer year);
 
 
 
@@ -38,5 +39,5 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
             ORDER BY FUNCTION('MONTH', o.orderTime)
             """)
     List<MonthAndVisitorCountAndStoreIdByYearProjection> findVisitorCountListByStoreIdAndYear(@Param("storeId") Long storeId,
-                                                                                                @Param("year") Integer year);
+                                                                                              @Param("year") Integer year);
 }

@@ -45,7 +45,7 @@ public class User {
     @Column(name = "USER_AGE")
     private Integer userAge;
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "user")
     private List<Order> orderList;
 
 }

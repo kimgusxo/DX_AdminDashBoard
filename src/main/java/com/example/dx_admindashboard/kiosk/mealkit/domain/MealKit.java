@@ -48,9 +48,9 @@ public class MealKit {
     @Column(name = "MEAL_KIT_URL")
     private String mealKitUrl;
 
-    @OneToMany(mappedBy = "mealKitCounter")
+    @OneToMany(mappedBy = "mealKit")
     private List<MealKitCounter> mealKitCounterList;
 
-    @OneToMany(mappedBy = "mealKitOrder")
+    @OneToMany(mappedBy = "mealKit")
     private List<MealKitOrder> mealKitOrderList;
 }

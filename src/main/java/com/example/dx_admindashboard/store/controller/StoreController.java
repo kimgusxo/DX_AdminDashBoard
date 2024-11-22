@@ -7,9 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -28,11 +26,11 @@ public class StoreController {
         return new ResponseEntity<>(storeService.getStoreList(), HttpStatus.OK);
     }
 
-    @GetMapping("/get/one")
+    @GetMapping("/get/one/{storeId}")
     @Operation(summary = "Get One Store", description = "매장 가져오기")
-    public ResponseEntity<StoreDTO> getStore() {
+    public ResponseEntity<StoreDTO> getStore(@PathVariable Long storeId) {
         log.info("getStore");
-        return new ResponseEntity<>(storeService.getStore(), HttpStatus.OK);
+        return new ResponseEntity<>(storeService.getStore(storeId), HttpStatus.OK);
     }
 
 }

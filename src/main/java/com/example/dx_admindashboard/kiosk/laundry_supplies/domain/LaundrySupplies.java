@@ -45,10 +45,10 @@ public class LaundrySupplies {
     @Column(name = "LAUNDRY_SUPPLIES_URL")
     private String laundrySuppliesUrl;
 
-    @OneToMany(mappedBy = "laundrySuppliesCounter")
+    @OneToMany(mappedBy = "laundrySupplies")
     private List<LaundrySuppliesCounter> laundrySuppliesCounterList;
 
-    @OneToMany(mappedBy = "laundrySuppliesOrder")
+    @OneToMany(mappedBy = "laundrySupplies")
     private List<LaundrySuppliesOrder> laundrySuppliesOrderList;
 
 }

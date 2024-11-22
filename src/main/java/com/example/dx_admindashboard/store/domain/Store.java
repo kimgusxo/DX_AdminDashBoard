@@ -40,16 +40,16 @@ public class Store {
     @Column(name = "LONGITUDE")
     private Double longitude;
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "store")
     private List<Order> orderList;
 
-    @OneToMany(mappedBy = "laundrySuppliesCounter")
+    @OneToMany(mappedBy = "store")
     private List<LaundrySuppliesCounter> supplierList;
 
-    @OneToMany(mappedBy = "homeAppliancesState")
+    @OneToMany(mappedBy = "store")
     private List<HomeAppliancesState> homeAppliancesStateList;
 
-    @OneToMany(mappedBy = "mealKitCounter")
+    @OneToMany(mappedBy = "store")
     private List<MealKitCounter> mealKitCounterList;
 
 }

@@ -1,6 +1,7 @@
 package com.example.dx_admindashboard.exception.controller;
 
 import com.example.dx_admindashboard.exception.ListEmptyException;
+import com.example.dx_admindashboard.exception.ObjectEmptyException;
 import com.example.dx_admindashboard.exception.dto.ErrorDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,8 +17,13 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(ListEmptyException.class)
-    protected ResponseEntity<ErrorDTO> noSuchElementExceptionHandler(ListEmptyException le) {
+    protected ResponseEntity<ErrorDTO> listEmptyExceptionHandler(ListEmptyException le) {
         return new ResponseEntity<>(ErrorDTO.of("리스트가 비어있습니다."), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(ObjectEmptyException.class)
+    protected ResponseEntity<ErrorDTO> objectEmptyExceptionHandler(ObjectEmptyException oe) {
+        return new ResponseEntity<>(ErrorDTO.of("객체가 비어있습니다"), HttpStatus.NOT_FOUND);
     }
 
 }

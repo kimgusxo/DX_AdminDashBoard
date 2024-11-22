@@ -101,7 +101,8 @@ public interface MealKitRepository extends JpaRepository<MealKit, Long> {
             FROM MealKit mk
             JOIN MealKitOrder mko ON mk.mealKitId = mko.mealKit.mealKitId
             JOIN mko.order o
-            WHERE FUNCTION('YEAR', o.orderTime) = :year
+            WHERE o.store.storeId = :storeId
+            AND FUNCTION('YEAR', o.orderTime) = :year
             AND FUNCTION('MONTH', o.orderTime) = :month
             GROUP BY mk.mealKitId
             ORDER BY monthlyTotalRevenue DESC

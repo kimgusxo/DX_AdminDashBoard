@@ -40,6 +40,6 @@ public class HomeAppliances {
     @Column(name = "HOME_APPLIANCES_DESCRIPTION")
     private String homeAppliancesDescription;
 
-    @OneToMany(mappedBy = "homeAppliancesState")
+    @OneToMany(mappedBy = "homeAppliances")
     private List<HomeAppliancesState> homeAppliancesStateList;
 }

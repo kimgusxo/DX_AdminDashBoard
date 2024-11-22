@@ -28,6 +28,6 @@ public class LaundryTicket {
     @Column(name = "LAUNDRY_TICKET_PRICE")
     private Integer laundryTicketPrice;
 
-    @OneToMany(mappedBy = "laundryTicketOrder")
+    @OneToMany(mappedBy = "laundryTicket")
     private List<LaundryTicketOrder> laundryTicketOrderList;
 }
