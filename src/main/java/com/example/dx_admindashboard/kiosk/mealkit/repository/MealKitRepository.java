@@ -5,6 +5,7 @@ import com.example.dx_admindashboard.kiosk.mealkit.domain.projection.MealKitInfo
 import com.example.dx_admindashboard.kiosk.mealkit.domain.projection.MealKitInfoAndStoreIdAndMealKitCountProjection;
 import com.example.dx_admindashboard.kiosk.mealkit.domain.projection.MealKitInfoAndStoreIdAndTotalSalesProjection;
 import com.example.dx_admindashboard.kiosk.mealkit.domain.projection.MonthAndSalesCountAndStoreIdByMealKitIdAndYearProjection;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -65,7 +66,8 @@ public interface MealKitRepository extends JpaRepository<MealKit, Long> {
             ORDER BY totalSales DESC
             """)
     List<MealKitInfoAndStoreIdAndTotalSalesProjection> findMealKitSalesCountTop5ByStoreIdAndYear(@Param("storeId") Long storeId,
-                                                                                                 @Param("year") Integer year);
+                                                                                                 @Param("year") Integer year,
+                                                                                                 Pageable pageable);
 
     // 밀키트 재고 페이지 3번(연도/월 별)
     @Query("""
@@ -86,8 +88,8 @@ public interface MealKitRepository extends JpaRepository<MealKit, Long> {
             ORDER BY totalSales DESC
             """)
     List<MealKitInfoAndStoreIdAndTotalSalesProjection> findMealKitSalesCountTop5ByStoreIdAndYearAndMonth(@Param("storeId") Long storeId,
-                                                                                 @Param("year") Integer year,
-                                                                                 @Param("month") Integer month);
+                                                                                                         @Param("year") Integer year,
+                                                                                                         @Param("month") Integer month);
 
     // Main 페이지 4번 사용
     @Query("""

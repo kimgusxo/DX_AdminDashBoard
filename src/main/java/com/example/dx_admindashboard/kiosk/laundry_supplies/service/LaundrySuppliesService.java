@@ -9,6 +9,8 @@ import com.example.dx_admindashboard.kiosk.laundry_supplies.domain.projection.La
 import com.example.dx_admindashboard.kiosk.laundry_supplies.domain.projection.MonthAndSalesCountAndStoreIdByLaundrySuppliesIdProjection;
 import com.example.dx_admindashboard.kiosk.laundry_supplies.repository.LaundrySuppliesRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -62,8 +64,10 @@ public class LaundrySuppliesService {
     @Transactional
     public List<LaundrySuppliesInfoAndStoreIdAndTotalSalesProjectionDTO> getLaundrySuppliesSalesCountTop5ByStoreIdAndYear(Long storeId,
                                                                                                                           Integer year) {
+        Pageable pageable = PageRequest.of(0, 5);
+
         List<LaundrySuppliesInfoAndStoreIdAndTotalSalesProjection> results =
-                laundrySuppliesRepository.findLaundrySuppliesSalesCountTop5ByStoreIdAndYear(storeId, year);
+                laundrySuppliesRepository.findLaundrySuppliesSalesCountTop5ByStoreIdAndYear(storeId, year, pageable);
 
         if (results.isEmpty()) {
             throw new ListEmptyException();
@@ -82,8 +86,10 @@ public class LaundrySuppliesService {
     public List<LaundrySuppliesInfoAndStoreIdAndTotalSalesProjectionDTO> getLaundrySuppliesSalesCountTop5ByStoreIdAndYearAndMonth(Long storeId,
                                                                                                                                Integer year,
                                                                                                                                Integer month) {
+        Pageable pageable = PageRequest.of(0, 5);
+
         List<LaundrySuppliesInfoAndStoreIdAndTotalSalesProjection> results =
-                laundrySuppliesRepository.findLaundrySuppliesSalesCountTop5ByStoreIdAndYearAndMonth(storeId, year, month);
+                laundrySuppliesRepository.findLaundrySuppliesSalesCountTop5ByStoreIdAndYearAndMonth(storeId, year, month, pageable);
 
         if (results.isEmpty()) {
             throw new ListEmptyException();

@@ -5,6 +5,7 @@ import com.example.dx_admindashboard.kiosk.laundry_supplies.domain.LaundrySuppli
 import com.example.dx_admindashboard.kiosk.laundry_supplies.domain.projection.LaundrySuppliesInfoAndStoreIdAndStoreCountProjection;
 import com.example.dx_admindashboard.kiosk.laundry_supplies.domain.projection.LaundrySuppliesInfoAndStoreIdAndTotalSalesProjection;
 import com.example.dx_admindashboard.kiosk.laundry_supplies.domain.projection.MonthAndSalesCountAndStoreIdByLaundrySuppliesIdProjection;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -63,7 +64,8 @@ public interface LaundrySuppliesRepository extends JpaRepository<LaundrySupplies
             ORDER BY totalSales DESC
             """)
     List<LaundrySuppliesInfoAndStoreIdAndTotalSalesProjection> findLaundrySuppliesSalesCountTop5ByStoreIdAndYear(@Param("storeId") Long storeId,
-                                                                                                                 @Param("year") Integer year);
+                                                                                                                 @Param("year") Integer year,
+                                                                                                                 Pageable pageable);
 
     // 세탁용품 재고 페이지 3번 (연도/월별)
     @Query("""
@@ -83,7 +85,8 @@ public interface LaundrySuppliesRepository extends JpaRepository<LaundrySupplies
             ORDER BY totalSales DESC
             """)
     List<LaundrySuppliesInfoAndStoreIdAndTotalSalesProjection> findLaundrySuppliesSalesCountTop5ByStoreIdAndYearAndMonth(@Param("storeId") Long storeId,
-                                                                                         @Param("year") Integer year,
-                                                                                         @Param("month") Integer month);
+                                                                                                                         @Param("year") Integer year,
+                                                                                                                         @Param("month") Integer month,
+                                                                                                                         Pageable pageable);
 
 }
