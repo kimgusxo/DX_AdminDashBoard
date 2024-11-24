@@ -27,6 +27,12 @@ public class LaundrySuppliesController {
         log.info("getLaundrySuppliesByStoreId : storeId = {}", storeId);
         return new ResponseEntity<>(laundrySuppliesService.getLaundrySuppliesByStoreId(storeId), HttpStatus.OK);
     }
+    @GetMapping("/get/list/less10/{storeId}")
+    @Operation(summary = "Get LaundrySuppliesList By LaundrySuppliesCount Less Than 10", description = "매장 별 재고가 10개 미만인 세탁용품 리스트 가져오기")
+    public ResponseEntity<List<LaundrySuppliesInfoAndStoreIdAndStoreCountProjectionDTO>> getLaundrySuppliesByStoreIdAndLaundrySuppliesCountLessThan10(@PathVariable Long storeId) {
+        log.info("getLaundrySuppliesByStoreIdAndLaundrySuppliesCountLessThan10 : storeId = {}", storeId);
+        return new ResponseEntity<>(laundrySuppliesService.getLaundrySuppliesByStoreIdAndLaundrySuppliesCountLessThan10(storeId), HttpStatus.OK);
+    }
 
     @GetMapping("/get/one/month/count")
     @Operation(summary = "Get LaundrySuppliesSalesCount By LaundrySuppliesId And Year", description = "매장 별 세탁용품 별 해당 연도의 월별 판매량")

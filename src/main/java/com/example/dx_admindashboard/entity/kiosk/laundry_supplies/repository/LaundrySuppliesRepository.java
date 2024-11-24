@@ -43,8 +43,8 @@ public interface LaundrySuppliesRepository extends JpaRepository<LaundrySupplies
             WHERE lc.store.storeId = :storeId
             AND lc.laundrySuppliesCount < :remainCount
            """)
-    List<LaundrySuppliesInfoAndStoreIdAndStoreCountProjection> findLaundrySuppliesByStoreIdAndLessThan10(@Param("storeId") Long storeId,
-                                                                                                         @Param("remainCount") Integer remainCount);
+    List<LaundrySuppliesInfoAndStoreIdAndStoreCountProjection> findLaundrySuppliesByStoreIdAndLaundrySuppliesCountLessThan10(@Param("storeId") Long storeId,
+                                                                                                                             @Param("remainCount") Integer remainCount);
 
     // 세탁용품 재고 페이지 2번 (월별 판매량)
     @Query("""

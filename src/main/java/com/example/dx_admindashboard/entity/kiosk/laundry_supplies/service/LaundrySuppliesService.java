@@ -42,6 +42,24 @@ public class LaundrySuppliesService {
     }
 
     @Transactional
+    public List<LaundrySuppliesInfoAndStoreIdAndStoreCountProjectionDTO> getLaundrySuppliesByStoreIdAndLaundrySuppliesCountLessThan10(Long storeId) {
+        List<LaundrySuppliesInfoAndStoreIdAndStoreCountProjection> results =
+                laundrySuppliesRepository.findLaundrySuppliesByStoreIdAndLaundrySuppliesCountLessThan10(storeId, 10);
+
+        if (results.isEmpty()) {
+            throw new ListEmptyException();
+        }
+
+        List<LaundrySuppliesInfoAndStoreIdAndStoreCountProjectionDTO> resultsDTO = new ArrayList<>();
+
+        results.forEach(r -> {
+            resultsDTO.add(LaundrySuppliesInfoAndStoreIdAndStoreCountProjectionDTO.from(r));
+        });
+
+        return resultsDTO;
+    }
+
+    @Transactional
     public List<MonthAndSalesCountAndStoreIdByLaundrySuppliesIdProjectionDTO> getLaundrySuppliesSalesCountByLaundrySuppliesIdAndStoreIdAndYear(Long laundrySuppliesId,
                                                                                                                                                Long storeId,
                                                                                                                                                Integer year) {
