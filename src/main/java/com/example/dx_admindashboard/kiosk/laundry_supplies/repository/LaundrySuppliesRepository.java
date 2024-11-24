@@ -30,6 +30,22 @@ public interface LaundrySuppliesRepository extends JpaRepository<LaundrySupplies
            """)
     List<LaundrySuppliesInfoAndStoreIdAndStoreCountProjection> findLaundrySuppliesByStoreId(@Param("storeId") Long storeId);
 
+    // 주문 페이지 2번 (재고 10개 미만 상품)
+    @Query("""
+            SELECT ls.laundrySuppliesId AS laundrySuppliesId,
+                   ls.laundrySuppliesName AS laundrySuppliesName,
+                   ls.laundrySuppliesClassification AS laundrySuppliesClassification,
+                   ls.laundrySuppliesPrice AS laundrySuppliesPrice,
+                   lc.store.storeId AS storeId,
+                   lc.laundrySuppliesCount AS storeCount
+            FROM LaundrySupplies ls
+            JOIN LaundrySuppliesCounter lc ON ls.laundrySuppliesId = lc.laundrySupplies.laundrySuppliesId
+            WHERE lc.store.storeId = :storeId
+            AND lc.laundrySuppliesCount < :remainCount
+           """)
+    List<LaundrySuppliesInfoAndStoreIdAndStoreCountProjection> findLaundrySuppliesByStoreIdAndLessThan10(@Param("storeId") Long storeId,
+                                                                                                         @Param("remainCount") Integer remainCount);
+
     // 세탁용품 재고 페이지 2번 (월별 판매량)
     @Query("""
             SELECT EXTRACT(MONTH FROM o.orderTime) AS month,

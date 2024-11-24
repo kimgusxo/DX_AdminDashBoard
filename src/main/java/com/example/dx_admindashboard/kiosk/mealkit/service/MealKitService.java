@@ -11,6 +11,8 @@ import com.example.dx_admindashboard.kiosk.mealkit.domain.projection.MealKitInfo
 import com.example.dx_admindashboard.kiosk.mealkit.domain.projection.MonthAndSalesCountAndStoreIdByMealKitIdAndYearProjection;
 import com.example.dx_admindashboard.kiosk.mealkit.repository.MealKitRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -64,8 +66,10 @@ public class MealKitService {
     @Transactional
     public List<MealKitInfoAndStoreIdAndTotalSalesProjectionDTO> getMealKitSalesCountTop5ByStoreIdAndYear(Long storeId,
                                                                                                           Integer year) {
+        Pageable pageable = PageRequest.of(0, 5);
+
         List<MealKitInfoAndStoreIdAndTotalSalesProjection> results =
-                mealKitRepository.findMealKitSalesCountTop5ByStoreIdAndYear(storeId, year);
+                mealKitRepository.findMealKitSalesCountTop5ByStoreIdAndYear(storeId, year, pageable);
 
         if (results.isEmpty()) {
             throw new ListEmptyException();
@@ -84,8 +88,10 @@ public class MealKitService {
     public List<MealKitInfoAndStoreIdAndTotalSalesProjectionDTO> getMealKitSalesCountTop5ByStoreIdAndYearAndMonth(Long storeId,
                                                                                                                   Integer year,
                                                                                                                   Integer month) {
+        Pageable pageable = PageRequest.of(0, 5);
+
         List<MealKitInfoAndStoreIdAndTotalSalesProjection> results =
-                mealKitRepository.findMealKitSalesCountTop5ByStoreIdAndYearAndMonth(storeId, year, month);
+                mealKitRepository.findMealKitSalesCountTop5ByStoreIdAndYearAndMonth(storeId, year, month, pageable);
 
         if (results.isEmpty()) {
             throw new ListEmptyException();
@@ -104,8 +110,10 @@ public class MealKitService {
     public List<MealKitInfoAndStoreIdAndMonthlyTotalRevenueProjectionDTO> getMealKitSalesRevenueTop5ByStoreIdAndYearAndMonth(Long storeId,
                                                                                                                              Integer year,
                                                                                                                              Integer month) {
+        Pageable pageable = PageRequest.of(0, 5);
+
         List<MealKitInfoAndStoreIdAndMonthlyTotalRevenueProjection> results =
-                mealKitRepository.findMealKitSalesRevenueTop5ByStoreIdAndYearAndMonth(storeId, year, month);
+                mealKitRepository.findMealKitSalesRevenueTop5ByStoreIdAndYearAndMonth(storeId, year, month, pageable);
 
         if (results.isEmpty()) {
             throw new ListEmptyException();
@@ -122,8 +130,10 @@ public class MealKitService {
 
     @Transactional
     public List<MealKitInfoAndStoreIdAndTotalSalesProjectionDTO> getMealKitSalesCountTop5ByStoreId(Long storeId) {
+        Pageable pageable = PageRequest.of(0, 5);
+
         List<MealKitInfoAndStoreIdAndTotalSalesProjection> results =
-                mealKitRepository.findMealKitSalesCountTop5ByStoreId(storeId);
+                mealKitRepository.findMealKitSalesCountTop5ByStoreId(storeId, pageable);
 
         if (results.isEmpty()) {
             throw new ListEmptyException();

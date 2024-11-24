@@ -56,4 +56,8 @@ public class LaundrySuppliesController {
         log.info("getLaundrySuppliesSalesCountTop5ByStoreIdAndYearAndMonth : storeId = {}, year = {}, month = {}", storeId, year, month);
         return new ResponseEntity<>(laundrySuppliesService.getLaundrySuppliesSalesCountTop5ByStoreIdAndYearAndMonth(storeId, year, month), HttpStatus.OK);
     }
+
+    @GetMapping
+    @Operation()
+    public ResponseEntity<>
 }

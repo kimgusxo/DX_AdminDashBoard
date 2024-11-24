@@ -31,6 +31,23 @@ public interface MealKitRepository extends JpaRepository<MealKit, Long> {
            """)
     List<MealKitInfoAndStoreIdAndMealKitCountProjection> findMealKitListByStoreId(@Param("storeId") Long storeId);
 
+    // 주문 페이지 1번 (재고 10개 미만)
+    @Query("""
+            SELECT mk.mealKitId AS mealKitId,
+                   mk.mealKitName AS mealKitName,
+                   mk.mealKitClassification AS mealKitClassification,
+                   mk.mealKitFoodClassification AS mealKitFoodClassification,
+                   mk.mealKitPrice AS mealKitPrice,
+                   mc.store.storeId AS storeId,
+                   mc.mealKitCount AS mealKitCount
+            FROM MealKit mk
+            JOIN MealKitCounter mc ON mk.mealKitId = mc.mealKit.mealKitId
+            WHERE mc.store.storeId = :storeId
+            AND mc.mealKitCount < :remainCount
+           """)
+    List<MealKitInfoAndStoreIdAndMealKitCountProjection> findMealKitListByStoreIdAndLessThan10(@Param("storeId") Long storeId,
+                                                                                  @Param("reaminCount") Integer reaminCount);
+
     // 밀키트 재고 페이지 2번
     @Query("""
             SELECT EXTRACT(MONTH FROM o.orderTime) AS month,
@@ -89,7 +106,8 @@ public interface MealKitRepository extends JpaRepository<MealKit, Long> {
             """)
     List<MealKitInfoAndStoreIdAndTotalSalesProjection> findMealKitSalesCountTop5ByStoreIdAndYearAndMonth(@Param("storeId") Long storeId,
                                                                                                          @Param("year") Integer year,
-                                                                                                         @Param("month") Integer month);
+                                                                                                         @Param("month") Integer month,
+                                                                                                         Pageable pageable);
 
     // Main 페이지 4번 사용
     @Query("""
@@ -111,7 +129,8 @@ public interface MealKitRepository extends JpaRepository<MealKit, Long> {
             """)
     List<MealKitInfoAndStoreIdAndMonthlyTotalRevenueProjection> findMealKitSalesRevenueTop5ByStoreIdAndYearAndMonth(@Param("storeId") Long storeId,
                                                                                                                     @Param("year") Integer year,
-                                                                                                                    @Param("month") Integer month);
+                                                                                                                    @Param("month") Integer month,
+                                                                                                                    Pageable pageable);
 
 
     // Main 페이지 6번 사용
@@ -130,7 +149,8 @@ public interface MealKitRepository extends JpaRepository<MealKit, Long> {
             GROUP BY mk.mealKitId, o.store.storeId
             ORDER BY totalSales DESC
             """)
-    List<MealKitInfoAndStoreIdAndTotalSalesProjection> findMealKitSalesCountTop5ByStoreId(@Param("storeId") Long storeId);
+    List<MealKitInfoAndStoreIdAndTotalSalesProjection> findMealKitSalesCountTop5ByStoreId(@Param("storeId") Long storeId,
+                                                                                          Pageable pageable);
 
 
 }
