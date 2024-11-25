@@ -44,6 +44,24 @@ public class MealKitService {
     }
 
     @Transactional
+    public List<MealKitInfoAndStoreIdAndMealKitCountProjectionDTO> getMealKitListByStoreIdAndMealKitCountLessThan10(Long storeId) {
+        List<MealKitInfoAndStoreIdAndMealKitCountProjection> results =
+                mealKitRepository.findMealKitListByStoreIdAndMealKitCountLessThan10(storeId, 10);
+
+        if (results.isEmpty()) {
+            throw new ListEmptyException();
+        }
+
+        List<MealKitInfoAndStoreIdAndMealKitCountProjectionDTO> resultsDTO = new ArrayList<>();
+
+        results.forEach(r -> {
+            resultsDTO.add(MealKitInfoAndStoreIdAndMealKitCountProjectionDTO.from(r));
+        });
+
+        return resultsDTO;
+    }
+
+    @Transactional
     public List<MonthAndSalesCountAndStoreIdByMealKitIdAndYearProjectionDTO> getMealKitSalesCountByMealKitIdAndStoreIdAndYear(Long mealKitId,
                                                                                                                               Long storeId,
                                                                                                                               Integer year) {

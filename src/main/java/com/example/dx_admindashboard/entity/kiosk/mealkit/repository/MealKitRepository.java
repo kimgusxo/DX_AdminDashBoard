@@ -45,8 +45,8 @@ public interface MealKitRepository extends JpaRepository<MealKit, Long> {
             WHERE mc.store.storeId = :storeId
             AND mc.mealKitCount < :remainCount
            """)
-    List<MealKitInfoAndStoreIdAndMealKitCountProjection> findMealKitListByStoreIdAndLessThan10(@Param("storeId") Long storeId,
-                                                                                  @Param("reaminCount") Integer reaminCount);
+    List<MealKitInfoAndStoreIdAndMealKitCountProjection> findMealKitListByStoreIdAndMealKitCountLessThan10(@Param("storeId") Long storeId,
+                                                                                                           @Param("remainCount") Integer remainCount);
 
     // 밀키트 재고 페이지 2번
     @Query("""

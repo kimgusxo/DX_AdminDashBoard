@@ -29,6 +29,13 @@ public class MealKitController {
         return new ResponseEntity<>(mealKitService.getMealKitListByStoreId(storeId), HttpStatus.OK);
     }
 
+    @GetMapping("/get/list/less10/{storeId}")
+    @Operation(summary = "Get MealKitList", description = "매장 별 재고가 10개 미만인 밀키트 리스트 가져오기")
+    public ResponseEntity<List<MealKitInfoAndStoreIdAndMealKitCountProjectionDTO>> getMealKitListByStoreIdAndMealKitCountLessThan10(@PathVariable Long storeId) {
+        log.info("getMealKitListByStoreIdAndMealKitCountLessThan10 : storeId = {}", storeId);
+        return new ResponseEntity<>(mealKitService.getMealKitListByStoreIdAndMealKitCountLessThan10(storeId), HttpStatus.OK);
+    }
+
     @GetMapping("/get/one/month/count")
     @Operation(summary = "Get MealKitSalesCount By MealKitId And Year", description = "매장 별 밀키트별 해당 연도의 월별 판매량")
     public ResponseEntity<List<MonthAndSalesCountAndStoreIdByMealKitIdAndYearProjectionDTO>> getMealKitSalesCountByMealKitIdAndStoreIdAndYear(@RequestParam Long mealKitId,
