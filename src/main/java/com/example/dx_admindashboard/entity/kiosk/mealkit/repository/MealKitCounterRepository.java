@@ -18,5 +18,5 @@ public interface MealKitCounterRepository extends JpaRepository<MealKitCounter, 
         WHERE mkc.mealKit.mealKitId = :#{#mkcd.mealKitId}
         AND mkc.store.storeId = :#{#mkcd.storeId}
         """)
-    Integer updateMealKitCounter(@Param("mkcd") MealKitCounterDTO mealKitCounterDTO);
+    Integer updateMealKitCounter(@Param("mkcd") MealKitCounterDTO mkcd);
 }
