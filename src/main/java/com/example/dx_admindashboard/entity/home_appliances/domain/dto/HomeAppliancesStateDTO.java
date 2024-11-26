@@ -8,12 +8,12 @@ public record HomeAppliancesStateDTO(
         Long storeId,
         Long homeAppliancesId,
         String homeAppliancesState,
-        String homeAppliancesPosition
+        Integer homeAppliancesPosition
 ) {
     public static HomeAppliancesStateDTO of(Long storeId,
                                             Long homeAppliancesId,
                                             String homeAppliancesState,
-                                            String homeAppliancesPosition) {
+                                            Integer homeAppliancesPosition) {
         return new HomeAppliancesStateDTO(storeId, homeAppliancesId, homeAppliancesState, homeAppliancesPosition);
     }
 
