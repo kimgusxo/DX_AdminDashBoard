@@ -33,5 +33,5 @@ public class HomeAppliancesState {
 
    @NotNull
    @Column(name = "HOME_APPLIANCES_POSITION")
-   private String homeAppliancesPosition;
+   private Integer homeAppliancesPosition;
 }
