@@ -111,22 +111,31 @@ public interface MealKitRepository extends JpaRepository<MealKit, Long> {
 
     // Main 페이지 4번 사용
     @Query("""
-            SELECT mk.mealKitId AS mealKitId,
-                   mk.mealKitName AS mealKitName,
-                   mk.mealKitClassification AS mealKitClassification,
-                   mk.mealKitFoodClassification AS mealKitFoodClassification,
-                   o.store.storeId AS storeId,
-                   mk.mealKitPrice AS mealKitPrice,
-                   SUM(mk.mealKitPrice * COUNT(mko)) AS monthlyTotalRevenue
-            FROM MealKit mk
-            JOIN MealKitOrder mko ON mk.mealKitId = mko.mealKit.mealKitId
+        SELECT mk.mealKitId AS mealKitId,
+               mk.mealKitName AS mealKitName,
+               mk.mealKitClassification AS mealKitClassification,
+               mk.mealKitFoodClassification AS mealKitFoodClassification,
+               o.store.storeId AS storeId,
+               mk.mealKitPrice AS mealKitPrice,
+               SUM(mk.mealKitPrice * orderCount.order_count) AS monthlyTotalRevenue
+        FROM MealKit mk
+        JOIN MealKitOrder mko ON mk.mealKitId = mko.mealKit.mealKitId
+        JOIN mko.order o
+        JOIN (
+            SELECT mko.mealKit.mealKitId AS mealKitId, COUNT(mko.mealKit.mealKitId) AS order_count
+            FROM MealKitOrder mko
             JOIN mko.order o
             WHERE o.store.storeId = :storeId
             AND EXTRACT(YEAR FROM o.orderTime) = :year
             AND EXTRACT(MONTH FROM o.orderTime) = :month
-            GROUP BY mk.mealKitId, o.store.storeId
-            ORDER BY monthlyTotalRevenue DESC
-            """)
+            GROUP BY mko.mealKit.mealKitId
+        ) orderCount ON mk.mealKitId = orderCount.mealKitId
+        WHERE o.store.storeId = :storeId
+        AND EXTRACT(YEAR FROM o.orderTime) = :year
+        AND EXTRACT(MONTH FROM o.orderTime) = :month
+        GROUP BY mk.mealKitId, mk.mealKitName, mk.mealKitClassification, mk.mealKitFoodClassification, o.store.storeId, mk.mealKitPrice
+        ORDER BY monthlyTotalRevenue DESC
+        """)
     List<MealKitInfoAndStoreIdAndMonthlyTotalRevenueProjection> findMealKitSalesRevenueTop5ByStoreIdAndYearAndMonth(@Param("storeId") Long storeId,
                                                                                                                     @Param("year") Integer year,
                                                                                                                     @Param("month") Integer month,
