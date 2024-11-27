@@ -103,7 +103,7 @@ public interface MealKitRepository extends JpaRepository<MealKit, Long> {
             AND EXTRACT(MONTH FROM o.orderTime) = :month
             GROUP BY mk.mealKitId, o.store.storeId
             ORDER BY totalSales DESC
-            """)
+           """)
     List<MealKitInfoAndStoreIdAndTotalSalesProjection> findMealKitSalesCountTop5ByStoreIdAndYearAndMonth(@Param("storeId") Long storeId,
                                                                                                          @Param("year") Integer year,
                                                                                                          @Param("month") Integer month,

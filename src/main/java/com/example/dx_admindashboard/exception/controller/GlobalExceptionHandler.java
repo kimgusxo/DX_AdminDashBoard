@@ -1,5 +1,6 @@
 package com.example.dx_admindashboard.exception.controller;
 
+import com.example.dx_admindashboard.exception.FirebaseException;
 import com.example.dx_admindashboard.exception.ListEmptyException;
 import com.example.dx_admindashboard.exception.ObjectEmptyException;
 import com.example.dx_admindashboard.exception.dto.ErrorDTO;
@@ -14,6 +15,11 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     protected ResponseEntity<ErrorDTO> commonExceptionHandler(Exception e) {
         return new ResponseEntity<>(ErrorDTO.of("알 수 없는 예외입니다."), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(FirebaseException.class)
+    protected ResponseEntity<ErrorDTO> firebaseExceptionHandler(FirebaseException e) {
+        return new ResponseEntity<>(ErrorDTO.of("파이어베이스 예외입니다."), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(ListEmptyException.class)

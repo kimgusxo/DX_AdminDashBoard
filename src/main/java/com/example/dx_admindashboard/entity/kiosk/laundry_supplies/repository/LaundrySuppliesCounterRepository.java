@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface LaundrySuppliesCounterRepository extends JpaRepository<LaundrySuppliesCounter, Long> {
 
@@ -21,4 +23,5 @@ public interface LaundrySuppliesCounterRepository extends JpaRepository<LaundryS
     Integer updateLaundrySuppliesCounter(@Param("lscd") LaundrySuppliesCounterDTO lscd);
 
 
+    Optional<LaundrySuppliesCounter> findByLaundrySupplies_LaundrySuppliesIdAndStore_StoreId(Long laundrySuppliesIdLong, Long storeId);
 }

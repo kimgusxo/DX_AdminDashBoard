@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 
 @Repository
 public interface MealKitCounterRepository extends JpaRepository<MealKitCounter, Long> {
@@ -19,4 +21,6 @@ public interface MealKitCounterRepository extends JpaRepository<MealKitCounter, 
         AND mkc.store.storeId = :#{#mkcd.storeId}
         """)
     Integer updateMealKitCounter(@Param("mkcd") MealKitCounterDTO mkcd);
+
+    Optional<MealKitCounter> findByMealKit_MealKitIdAndStore_StoreId(Long mealKitId, Long storeId);
 }
