@@ -29,6 +29,11 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
+/*
+ * 12시에 업데이트 하는 기능은 진짜 모든 것이 개발 완료되었을 때
+ * 리팩토링 하는걸로
+ * 합시다.
+ */
 @Service
 @RequiredArgsConstructor
 public class ScheduleService {
