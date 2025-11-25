@@ -21,7 +21,7 @@ public class MealKitCounterController {
     private final MealKitCounterService mealKitCounterService;
 
     @Operation(summary = "Update MealKitCounter", description = "밀키트 재고 업데이트")
-    @PutMapping("/update/count")
+    @PutMapping
     public ResponseEntity<Integer> fetchMealKitCounter(@RequestBody MealKitCounterDTO mealKitCounterDTO) {
         log.info("fetchMealKitCounter : mealKitCounterDTO = {}", mealKitCounterDTO);
         return new ResponseEntity<>(mealKitCounterService.fetchMealKitCounter(mealKitCounterDTO), HttpStatus.OK);

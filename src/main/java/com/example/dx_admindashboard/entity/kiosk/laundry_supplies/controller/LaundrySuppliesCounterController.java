@@ -21,7 +21,7 @@ public class LaundrySuppliesCounterController {
     private final LaundrySuppliesCounterService laundrySuppliesCounterService;
 
     @Operation(summary = "Update LaundrySuppliesCounter", description = "세탁용품 재고 업데이트")
-    @PutMapping("/update/count")
+    @PutMapping
     public ResponseEntity<Integer> fetchLaundrySuppliesCounter(@RequestBody LaundrySuppliesCounterDTO laundrySuppliesCounterDTO) {
         log.info("fetchLaundrySuppliesCounter : laundrySuppliesCounterDTO = {}", laundrySuppliesCounterDTO);
         return new ResponseEntity<>(laundrySuppliesCounterService.fetchLaundrySuppliesCounter(laundrySuppliesCounterDTO), HttpStatus.OK);

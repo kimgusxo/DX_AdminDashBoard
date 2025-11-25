@@ -19,14 +19,14 @@ public class HomeAppliancesController {
 
     private final HomeAppliancesService homeAppliancesService;
 
-    @GetMapping("/get/list/{storeId}")
+    @GetMapping
     @Operation(summary = "Get HomeAppliancesList", description = "매장 별 가전 리스트 가져오기")
-    public ResponseEntity<List<HomeAppliancesInfoAndStoreIdProjectionDTO>> getHomeAppliancesListByStoreId(@PathVariable Long storeId) {
+    public ResponseEntity<List<HomeAppliancesInfoAndStoreIdProjectionDTO>> getHomeAppliancesListByStoreId(@RequestParam Long storeId) {
         log.info("getHomeAppliancesListByStoreId : storeId = {}", storeId);
         return new ResponseEntity<>(homeAppliancesService.getHomeAppliancesListByStoreId(storeId), HttpStatus.OK);
     }
 
-    @GetMapping("/get/state")
+    @GetMapping("/state")
     @Operation(summary = "Get HomeAppliancesList By HomeAppliancesState", description = "매장 별 고장난 상태의 가전 리스트 가져오기")
     public ResponseEntity<List<HomeAppliancesInfoAndStoreIdProjectionDTO>> getHomeAppliancesListByStoreIdAndHomeAppliancesState(@RequestParam Long storeId,
                                                                                                                                 @RequestParam String homeAppliancesState) {

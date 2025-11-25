@@ -17,13 +17,13 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/order")
+@RequestMapping("/orders")
 @RequiredArgsConstructor
 public class OrderController {
 
     private final OrderService orderService;
 
-    @GetMapping("/get/list/month/revenue")
+    @GetMapping("/month/revenue")
     @Operation(summary = "Get TotalRevenue By Year", description = "매장 별 해당년도의 월 별 총 매출액")
     public ResponseEntity<List<MonthAndTotalRevenueAndStoreIdByYearProjectionDTO>> getTotalRevenueListByStoreIdAndYear(@RequestParam Long storeId,
                                                                                                                        @RequestParam Integer year) {
@@ -31,7 +31,7 @@ public class OrderController {
         return new ResponseEntity<>(orderService.getTotalRevenueListByStoreIdAndYear(storeId, year), HttpStatus.OK);
     }
 
-    @GetMapping("/get/list/month/visitorCount")
+    @GetMapping("/month/visitorCount")
     @Operation(summary = "Get VisitorCount By Year", description = "매장 별 해당년도의 월 별 총 고객 수")
     public ResponseEntity<List<MonthAndVisitorCountAndStoreIdByYearProjectionDTO>> getVisitorCountListByStoreIdAndYear(@RequestParam Long storeId,
                                                                                                                        @RequestParam Integer year) {

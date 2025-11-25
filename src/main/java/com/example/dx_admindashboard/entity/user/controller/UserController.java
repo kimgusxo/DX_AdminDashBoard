@@ -14,20 +14,20 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/users")
 @RequiredArgsConstructor
 public class UserController {
 
     private final UserService userService;
 
-    @GetMapping("/get/list/{storeId}")
+    @GetMapping
     @Operation(summary = "Get UserList", description = "매장 별 사용 고객 리스트 가져오기")
-    public ResponseEntity<List<UserDTO>> getUserListByStoreId(@PathVariable Long storeId) {
+    public ResponseEntity<List<UserDTO>> getUserListByStoreId(@RequestParam Long storeId) {
         log.info("getUserListByStoreId : {}", storeId);
         return new ResponseEntity<>(userService.getUserListByStoreId(storeId), HttpStatus.OK);
     }
 
-    @GetMapping("/get/list/gender")
+    @GetMapping("/gender")
     @Operation(summary = "Get UserLists By UserGender", description = "매장 별 성별 별 밀키트 판매량 TOP 5")
     public ResponseEntity<List<MealKitInfoAndTotalSalesAndStoreIdByUserFeaturesProjectionDTO>> getMealKitSalesCountTop5ByUserGender(@RequestParam Long storeId,
                                                                                                                                     @RequestParam String userGender) {
@@ -35,13 +35,11 @@ public class UserController {
         return new ResponseEntity<>(userService.getMealKitSalesCountTop5ByUserGender(storeId, userGender), HttpStatus.OK);
     }
 
-    @GetMapping("/get/list/age")
+    @GetMapping("/age")
     @Operation(summary = "Get UserLists By UserAge", description = "매장 별 연령 별 밀키트 판매량 TOP 5")
     public ResponseEntity<List<MealKitInfoAndTotalSalesAndStoreIdByUserFeaturesProjectionDTO>> getMealKitSalesCountTop5ByUserAge(@RequestParam Long storeId,
                                                                                                                                  @RequestParam Integer userAge) {
         log.info("getMealKitSalesCountTop5ByUserAge : storeId = {}, userAge = {}", storeId, userAge);
         return new ResponseEntity<>(userService.getMealKitSalesCountTop5ByUserAge(storeId, userAge), HttpStatus.OK);
     }
-
-
 }

@@ -13,20 +13,20 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/store")
+@RequestMapping("/stores")
 @RequiredArgsConstructor
 public class StoreController {
 
     private final StoreService storeService;
 
-    @GetMapping("/get/list")
+    @GetMapping
     @Operation(summary = "Get StoreList", description = "매장 리스트 가져오기")
     public ResponseEntity<List<StoreDTO>> getStoreList() {
         log.info("getStoreList");
         return new ResponseEntity<>(storeService.getStoreList(), HttpStatus.OK);
     }
 
-    @GetMapping("/get/one/{storeId}")
+    @GetMapping("/{storeId}")
     @Operation(summary = "Get One Store", description = "매장 가져오기")
     public ResponseEntity<StoreDTO> getStore(@PathVariable Long storeId) {
         log.info("getStore");
